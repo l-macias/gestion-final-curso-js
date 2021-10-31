@@ -1,1 +1,53 @@
-/* No CSS *//*# sourceMappingURL=styles.css.map */
+@charset "UTF-8";
+.main__titulo {
+  color: white;
+  text-align: center;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  background: #2e2e30;
+  background: -webkit-gradient(linear, left top, left bottom, from(#2e2e30), color-stop(53%, black), to(#201e1e));
+  background: linear-gradient(180deg, #2e2e30 0%, black 53%, #201e1e 100%);
+  font-family: "Raleway", sans-serif;
+}
+
+a {
+  text-decoration: none;
+  list-style-type: none;
+}
+
+label {
+  /* Tamaño y alineación uniforme */
+  text-align: center;
+  color: #8caf0d;
+}
+
+.formulario {
+  padding: 1rem;
+  margin-right: 1rem;
+  margin-left: 1rem;
+  border-width: .2rem;
+  border: solid 1px #8caf0d;
+  border-radius: 30px 50px 0 0;
+  color: white;
+  margin-bottom: 20px;
+  border-color: white;
+}
+
+.formulario__btn {
+  background-color: #8caf0d;
+  border-color: white;
+}
+
+.formulario__btn:hover {
+  background-color: #000;
+  border-color: white;
+}
+/*# sourceMappingURL=styles.css.map */
