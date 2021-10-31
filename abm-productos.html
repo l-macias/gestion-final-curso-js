@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sistema de Gestión de Productos - Inicio</title>
+  <title>Sistema de Gestión de Productos - ABM Productos</title>
   <!-- CDN BOOTSTRAP -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
@@ -36,9 +36,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav ms-auto">
-            <a class="nav-link active" aria-current="page" href="./index.html">Inicio</a>
+            <a class="nav-link" href="./index.html">Inicio</a>
             <a class="nav-link" href="./abm-categorias.html">ABM Categorías</a>
-            <a class="nav-link" href="./abm-productos.html">ABM Productos</a>
+            <a class="nav-link active" href="./abm-productos.html">ABM Productos</a>
             <a class="nav-link" href="./comprobante-entrada.html">Fact. Proveedor</a>
             <a class="nav-link" href="./comprobante-salida.html">Facturar Productos</a>
             <a class="nav-link" href="./stock.html">Ver Stock</a>
@@ -47,22 +47,60 @@
       </div>
     </nav>
   </header>
-
   <main>
-    <section class="container-fluid">
-      <div class="row">
-        <h2 class="main__titulo mt-3">BIENVENIDO A ESTE INTENTO DE SISTEMA</h2>
+    <!-- Comienzo de Formulario -->
+    <form id="fomulario-productos" class="row g-3 needs-validation formulario mt-3" novalidate>
+      <div class="col-md-4">
+        <label for="validationCustom01" class="form-label">Codigo:</label>
+        <input type="text" class="form-control" id="codigo" placeholder="Ingresa el código">
       </div>
-      <div class="row">
-        <div class="d-lg-flex justify-content-center main__column">
-          <p class="col-lg-4  d-lg-flex main__p">En este sistema intentaré realizar un sistema de gestión de productos
-            que permita desde la creación de artículos y categorías de productos, hasta su ingreso a stock dando de alta
-            mediante ficticias cargas de facturas o remitos de proveedores. Dichos registros quedarán almacenados y se
-            podrán facturar, disminuyendo de esa forma el stock disponible.</p>
-          <p class="col-lg-4  d-lg-flex main__p">A su vez tambien podremos, al tener productos con cantidad ingresada,
-            tener la posibilidad de ingresar y ver la existencia de mercadería que tengamos disponible, y si me esmero,
-            poder ver los movimientos que ha tenido dicha pieza. Vale aclarar que esto es un boceto y que si no me da la
-            cabeza, termine entregando un carrito de compras. Espero poder estar a la altura. </p>
+      <div class="col-md-4">
+        <label for="validationCustom02" class="form-label">Descripción:</label>
+        <input type="text" class="form-control" id="desc" placeholder="Ingresa Descripción del Producto">
+      </div>
+      <div class="col-md-4">
+        <label for="validationCustom02" class="form-label">Categoría</label>
+        <select id="categoria" class="form-select" aria-label="Default select example">
+          <option selected>Seleccione una categoría</option>
+          <option value="1">Algo</option>
+          <option value="2">Otra</option>
+          <option value="3">Alguna</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label for="validationCustom02" class="form-label">Marca:</label>
+        <input type="text" class="form-control" id="marca" placeholder="Ingresa la Marca del Producto">
+      </div>
+      <div class="col-md-4">
+        <label for="validationCustom02" class="form-label">Precio de Costo:</label>
+        <div class="input-group has-validation">
+          <input type="number" class="form-control " id="costo" aria-describedby="inputGroupPrepend"
+            placeholder="Ingresa el precio de costo">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <label for="validationCustom03" class="form-label">Margen de Ganancia en porcentaje</label>
+        <input type="number" class="form-control" id="markup" placeholder="Ej: 20 (Sería 20%)">
+      </div>
+
+      <!-- Radio para el IVA-->
+      <div class="row mt-3">
+        <div class="form-check col-md-1">
+          <input type="radio" class="form-check-input" id="iva21" name="radio-stacked" value="21">
+          <label class="form-check-label" for="validationFormCheck2">IVA 21%</label>
+        </div>
+        <div class="form-check col-md-1">
+          <input type="radio" class="form-check-input" id="iva105" name="radio-stacked" value="10.5">
+          <label class="form-check-label" for="validationFormCheck3">IVA 10.5%</label>
+          <div class="invalid-feedback">Tienes que elegir uno de los 2.</div>
+        </div>
+
+        <!-- Botones -->
+        <div class="col-12 text-center">
+          <button class="btn btn-primary formulario__btn" type="reset">Limpiar</button>
+          <button id="boton-enviar" class="btn btn-primary formulario__btn" type="button">Enviar</button>
+        </div>
+    </form>
   </main>
   <!-- Footer -->
   <footer class="bg-dark text-white align-items-center">
@@ -108,10 +146,8 @@
   <script>// Example starter JavaScript for disabling form submissions if there are invalid fields
     (function () {
       'use strict'
-
       // Fetch all the forms we want to apply custom Bootstrap validation styles to
       var forms = document.querySelectorAll('.needs-validation')
-
       // Loop over them and prevent submission
       Array.prototype.slice.call(forms)
         .forEach(function (form) {
@@ -120,7 +156,6 @@
               event.preventDefault()
               event.stopPropagation()
             }
-
             form.classList.add('was-validated')
           }, false)
         })

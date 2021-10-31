@@ -13,14 +13,75 @@
 
 body {
   background: #2e2e30;
-  background: -webkit-gradient(linear, left top, left bottom, from(#2e2e30), color-stop(53%, black), to(#201e1e));
-  background: linear-gradient(180deg, #2e2e30 0%, black 53%, #201e1e 100%);
   font-family: "Raleway", sans-serif;
 }
 
 a {
   text-decoration: none;
   list-style-type: none;
+}
+
+h2 {
+  color: white;
+}
+
+.navbar__h1 {
+  color: #fff;
+}
+
+.navbar__logo {
+  max-width: 10vh;
+  height: auto;
+}
+
+.nav-link {
+  color: white !important;
+  font-weight: 700 !important;
+}
+
+.nav-link:hover {
+  color: #8caf0d !important;
+}
+
+.nav-link.active {
+  color: #8caf0d !important;
+}
+
+footer h5 {
+  color: #8caf0d;
+}
+
+footer p {
+  font-size: 0.7em;
+}
+
+.footer__a {
+  font-weight: 700;
+  font-size: 0.9em;
+  color: white;
+}
+
+.footer__a:hover {
+  color: #8caf0d;
+}
+
+.main__column {
+  color: white;
+  text-align: justify;
+}
+
+.main__img {
+  height: 25vh;
+  margin: 1em;
+}
+
+.main__p {
+  color: #8caf0d;
+  margin-top: 2em;
+  margin-left: 2em;
+  margin-right: 2em;
+  border: 3px solid aqua;
+  padding: 10px;
 }
 
 label {

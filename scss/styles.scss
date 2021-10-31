@@ -1,9 +1,9 @@
 //IMPORTS
-@import "variables";
-@import "globales";
-@import "./mixins";
-@import "components/header";
+@import "./variables";
+@import "./globales";
+@import "./components/header";
 @import "./components/footer";
+@import "./pages/index";
 @import "./pages/abm-categorias";
 @import "./pages/abm-productos";
 @import "./pages/comprobante-entrada";

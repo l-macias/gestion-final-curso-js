@@ -1,0 +1,19 @@
+//Main
+
+.main__column {
+  color: white;
+  text-align: justify;
+}
+.main__img {
+  height: 25vh;
+  margin: 1em;
+
+}
+.main__p {
+  color: $verde;
+  margin-top: 2em;
+  margin-left: 2em;
+  margin-right: 2em;
+  border: 3px solid $celeste;
+  padding: 10px;
+}

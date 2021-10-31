@@ -1,0 +1,18 @@
+//Header
+.navbar__h1 {
+  color: #fff;
+}
+.navbar__logo {
+  max-width: 10vh;
+  height: auto;
+}
+.nav-link {
+  color: white !important;
+  font-weight: 700 !important;
+  &:hover {
+    color: $verde !important;
+  }
+  &.active {
+    color: $verde !important;
+  }
+}
