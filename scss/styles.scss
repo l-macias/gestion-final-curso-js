@@ -1,3 +1,11 @@
-body {
-  color: white;
-}
+//IMPORTS
+@import "variables";
+@import "globales";
+@import "./mixins";
+@import "components/header";
+@import "./components/footer";
+@import "./pages/abm-categorias";
+@import "./pages/abm-productos";
+@import "./pages/comprobante-entrada";
+@import "./pages/comprobante-salida";
+@import "./pages/stock";
