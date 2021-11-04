@@ -48,59 +48,99 @@
     </nav>
   </header>
   <main>
-    <!-- Comienzo de Formulario -->
-    <form id="fomulario-productos" class="row g-3 needs-validation formulario mt-3" novalidate>
-      <div class="col-md-4">
-        <label for="validationCustom01" class="form-label">Codigo:</label>
-        <input type="text" class="form-control" id="codigo" placeholder="Ingresa el código">
-      </div>
-      <div class="col-md-4">
-        <label for="validationCustom02" class="form-label">Descripción:</label>
-        <input type="text" class="form-control" id="desc" placeholder="Ingresa Descripción del Producto">
-      </div>
-      <div class="col-md-4">
-        <label for="validationCustom02" class="form-label">Categoría</label>
-        <select id="categoria" class="form-select" aria-label="Default select example">
-          <option selected>Seleccione una categoría</option>
-          <option value="1">Algo</option>
-          <option value="2">Otra</option>
-          <option value="3">Alguna</option>
-        </select>
-      </div>
-      <div class="col-md-4">
-        <label for="validationCustom02" class="form-label">Marca:</label>
-        <input type="text" class="form-control" id="marca" placeholder="Ingresa la Marca del Producto">
-      </div>
-      <div class="col-md-4">
-        <label for="validationCustom02" class="form-label">Precio de Costo:</label>
-        <div class="input-group has-validation">
-          <input type="number" class="form-control " id="costo" aria-describedby="inputGroupPrepend"
-            placeholder="Ingresa el precio de costo">
+    <section class="seccion-formulario">
+      <!-- Comienzo de Formulario -->
+      <form id="formulario-productos" class="row g-3 needs-validation formulario mt-3" novalidate>
+        <div class="col-md-4">
+          <label for="validationCustom01" class="form-label">Codigo:</label>
+          <input type="text" class="form-control" id="codigo" placeholder="Ingresa el código">
         </div>
-      </div>
-      <div class="col-md-4">
-        <label for="validationCustom03" class="form-label">Margen de Ganancia en porcentaje</label>
-        <input type="number" class="form-control" id="markup" placeholder="Ej: 20 (Sería 20%)">
-      </div>
-
-      <!-- Radio para el IVA-->
-      <div class="row mt-3">
-        <div class="form-check col-md-1">
-          <input type="radio" class="form-check-input" id="iva21" name="radio-stacked" value="21">
-          <label class="form-check-label" for="validationFormCheck2">IVA 21%</label>
+        <div class="col-md-4">
+          <label for="validationCustom02" class="form-label">Descripción:</label>
+          <input type="text" class="form-control" id="desc" placeholder="Ingresa Descripción del Producto">
         </div>
-        <div class="form-check col-md-1">
-          <input type="radio" class="form-check-input" id="iva105" name="radio-stacked" value="10.5">
-          <label class="form-check-label" for="validationFormCheck3">IVA 10.5%</label>
-          <div class="invalid-feedback">Tienes que elegir uno de los 2.</div>
+        <div class="col-md-4">
+          <label for="validationCustom02" class="form-label">Categoría</label>
+          <select id="categoria" class="form-select" aria-label="Default select example">
+            <option selected>Seleccione una categoría</option>
+            <option value="1">Algo</option>
+            <option value="2">Otra</option>
+            <option value="3">Alguna</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label for="validationCustom02" class="form-label">Marca:</label>
+          <input type="text" class="form-control" id="marca" placeholder="Ingresa la Marca del Producto">
+        </div>
+        <div class="col-md-4">
+          <label for="validationCustom02" class="form-label">Precio de Costo:</label>
+          <div class="input-group has-validation">
+            <input type="number" class="form-control " id="costo" aria-describedby="inputGroupPrepend"
+              placeholder="Ingresa el precio de costo">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label for="validationCustom03" class="form-label">Margen de Ganancia en porcentaje</label>
+          <input type="number" class="form-control" id="markup" placeholder="Ej: 20 (Sería 20%)">
         </div>
 
-        <!-- Botones -->
-        <div class="col-12 text-center">
-          <button class="btn btn-primary formulario__btn" type="reset">Limpiar</button>
-          <button id="boton-enviar" class="btn btn-primary formulario__btn" type="button">Enviar</button>
-        </div>
-    </form>
+        <!-- Radio para el IVA-->
+        <div class="row mt-3">
+          <div class="form-check col-md-1">
+            <input type="radio" class="form-check-input" id="iva21" name="radio-stacked" value="21">
+            <label class="form-check-label" for="validationFormCheck2">IVA 21%</label>
+          </div>
+          <div class="form-check col-md-1">
+            <input type="radio" class="form-check-input" id="iva105" name="radio-stacked" value="10.5">
+            <label class="form-check-label" for="validationFormCheck3">IVA 10.5%</label>
+            <div class="invalid-feedback">Tienes que elegir uno de los 2.</div>
+          </div>
+
+          <!-- Botones -->
+          <div class="col-12 text-center">
+            <button id="boton-limpiar" class="btn btn-primary formulario__btn" type="reset">Limpiar</button>
+            <button id="boton-enviar" class="btn btn-primary formulario__btn" type="button">Enviar</button>
+          </div>
+      </form>
+    </section>
+
+    <div class="row container-fluid mt-3 mb-3">
+      <button id="boton-mostrar-todo" class="btn btn-warning col-2">MOSTRAR
+        TODOS</button>
+      <div class="col-3"></div>
+      <div class="col-2"></div>
+      <input id="input-buscar" class="col-4" id="input-buscar" type="text" placeholder="Ingrese el codigo a buscar">
+      <button id="boton-buscar" class="btn formulario__btn col-1">BUSCAR</button>
+    </div>
+    <div class="contenedor-productos container-fluid">
+      <table id="tabla-productos" class="table mt-3 table-dark">
+        <thead>
+          <tr>
+            <th scope="col">Codigo</th>
+            <th scope="col">Descripcion</th>
+            <th scope="col">Marca</th>
+            <th scope="col">Costo</th>
+            <th scope="col">Margen</th>
+            <th scope="col">IVA</th>
+            <th scope="col">Opciones</th>
+          </tr>
+        </thead>
+        <tbody id="cuerpo-tabla">
+
+          <!-- <tr>
+            <th scope="row">002</th>
+            <td>Jugo Tang de Naranja Dulce</td>
+            <td>Tang</td>
+            <td>$20</td>
+            <td>50%</td>
+            <td>21%</td>
+            <td><button class="btn btn-primary mx-2">editar</button><button class="btn btn-danger">eliminar</button>
+          </tr> -->
+      </table>
+    </div>
+    <div id="productos-DOM" class="row container-fluid mt-3 mb-3">
+    </div>
+
   </main>
   <!-- Footer -->
   <footer class="bg-dark text-white align-items-center">
