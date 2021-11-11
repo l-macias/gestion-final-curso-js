@@ -37,7 +37,6 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav ms-auto">
             <a class="nav-link" href="./index.html">Inicio</a>
-            <a class="nav-link" href="./abm-categorias.html">ABM Categorías</a>
             <a class="nav-link" href="./abm-productos.html">ABM Productos</a>
             <a class="nav-link active" href="./comprobante-entrada.html">Fact. Proveedor</a>
             <a class="nav-link" href="./comprobante-salida.html">Facturar Productos</a>
@@ -48,11 +47,86 @@
     </nav>
   </header>
   <main>
+    <!-- CABECERA DE LA FACTURA-->
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Carga de comprobantes de Entrada</h3>
+          </div>
+          <div class="card-body">
+            <form class="row">
+              <div class="form-group col-md-5">Razón Social<label for=""></label>
+                <input id="razon-social" type="text" class="form-control" placeholder="Razón social del proveedor">
+              </div>
+              <div class="form-group col-md-2"><label for="">CUIT</label>
+                <input id="numero-cuit" type="number" class="form-control"
+                  placeholder="Nro de CUIT sin guión: Ej: 20123456780">
+              </div>
+              <div class="form-group col-md-3"><label for="">Nro Comprobante</label>
+                <input id="numero-comprobante" type="number" class="form-control"
+                  placeholder="Nro de Comprobante: Ej: 123456">
+              </div>
+              <div class="form-group col-md-2"><label for="">Fecha</label>
+                <input id="fecha-comprobante-entrada" type="date" class="form-control">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--CARGA DE PRODUCTOS-->
+    <div class="row mt-3">
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <form id="formulario-productos" class="row">
+              <div id="contenedor-select-codigo" class="form-group col-md-2"><label for="">Código</label>
+                <select id="select-codigo" name="" id="input-codigo" class="form-control">
+                  <option value="0">--Seleccionar</option>
+                </select>
+              </div>
+              <div class="form-group col-md-1"><label for="">Cantidad</label>
+                <input id="input-cantidad" type="number" class="form-control">
+              </div>
+              <div class="form-group col-md-5"><label for="">Descripción</label>
+                <input id="input-descripcion" type="text" class="form-control" disabled>
+              </div>
+              <div class="form-group col-md-1"><label for="">P.Unitario</label>
+                <input id="input-precio-unitario" type="number" class="form-control" disabled>
+              </div>
+              <div class="form-group col-md-2"><label for="">P.Total</label>
+                <input id="input-precio-total" type="number" class="form-control" disabled>
+              </div>
+              <div class="form-group col-md-1"><button id="boton-agregar" type="submit"
+                  class="btn btn-primary">Agregar</button></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
 
+    <!--Mostrar la Factura-->
+    <div class="row">
+      <div class="col">
+        <table id="tabla-proveedores" class="table text-center mt-3 table-dark table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Cantidad</th>
+              <th scope="col">Codigo</th>
+              <th scope="col">Descripción</th>
+              <th scope="col">P.Unit</th>
+              <th scope="col">P.Total</th>
+              <th scope="col">%IVA</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
   </main>
 
   <!-- Footer -->
-  <footer class="bg-dark text-white align-items-center">
+  <footer class=" bg-dark text-white align-items-center">
     <div class="container-fluid justify-content-end justify-content-md-center">
       <div class="row text-center text-md-left ">
         <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
@@ -112,7 +186,10 @@
           }, false)
         })
     })()</script>
-  <script src="./js/main.js"></script>
+  <!--JQUERY-->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="./js/entrada.js"></script>
 </body>
 
 </html>

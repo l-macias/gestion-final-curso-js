@@ -1,0 +1,33 @@
+[
+  
+  
+    {
+    "idCategoria":"01",
+    "nombreCategoria": "Procesadores"
+    },
+    {
+    "idCategoria":"02",
+    "nombreCategoria": "Motherboards"
+    },
+    {
+    "idCategoria":"03",
+    "nombreCategoria": "Memorias"
+    },
+    {
+    "idCategoria":"04",
+    "nombreCategoria": "Almacenamiento"
+    },
+    {
+    "idCategoria":"05",
+    "nombreCategoria": "Tarjetas Gráficas"
+    },
+    {
+    "idCategoria":"06",
+    "nombreCategoria": "Fuentes de Alimentación"
+    },
+    {
+    "idCategoria":"07",
+    "nombreCategoria": "Periféricos"
+    }
+  ]
+  

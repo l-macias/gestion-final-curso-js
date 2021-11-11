@@ -1,9 +1,12 @@
 //Declaracion de clase Productos
+const URL_CAT_JSON = "./json/categorias.json"
+
 class Producto {
-  constructor (codigo,desc,marca,costo,markup,iva,precioVta,precioConIva){
+  constructor (codigo,desc,marca,categoria,costo,markup,iva,precioVta,precioConIva){
               this.codigo = codigo;
               this.desc = desc;
               this.marca = marca;
+              this.categoria = categoria;
               this.costo = costo
               this.markup = markup;
               this.porcentajeDeIva = iva;
@@ -73,11 +76,42 @@ const buscarCodigoLive = (codigo) => {
     return 0;
     })
     })
+    //JSON CATEGORIAS
+    $.getJSON (URL_CAT_JSON, (categ, estado) => {
+
+      if ( estado !== 'success') {
+        throw new Error('No se realizó el get correctamente')
+    }
+        for ( const categoria of categ ) {
+      $('#categoria').append(`
+              <option  
+                  id="categoria-${categoria.idCategoria}"
+                  value="${categoria.nombreCategoria}"
+                  > 
+                  ${ categoria.nombreCategoria }
+              </option>
+          `)
+  } 
+})
+
+
+let categoriaSeleccionada= ""
+const escucharCategoria = () =>{
+$(`#categoria`).change( (cat) => {
+  categoriaSelect = cat.target.value
+  
+  return categoriaSeleccionada = categoriaSelect;
+  })
+  
+}
+
+escucharCategoria()
+
     //ESCUCHAMOS EL BOTON ENVIAR
     btnEnviar.addEventListener('click', (e)=>{
     e.preventDefault()
     vaciarTabla()
-
+    
   //FUNCIONES DE CALCULOS
     let precioVta;
     calcularPrecioVta =  () =>{
@@ -89,6 +123,7 @@ const buscarCodigoLive = (codigo) => {
   calcularPrecioConIva = () => {
     return precioConIva = (precioVta*iva/100) + (precioVta);
   }
+  
   //Capturamos información del DOM
   let inputCodigo = document.getElementById('codigo')
   let inputDesc = document.getElementById('desc')
@@ -98,12 +133,15 @@ const buscarCodigoLive = (codigo) => {
   let radioIva = document.querySelectorAll('input[type=radio]:checked')
   
   
+  
   const codigo = inputCodigo.value;
   const desc = inputDesc.value;
   const marca = inputMarca.value;
+  const categoria = categoriaSeleccionada;
   const costo =+ inputCosto.value;
   const markup =+ inputMarkup.value;
   const iva =+ radioIva[0].value;
+  
   
   
   calcularPrecioVta()
@@ -114,7 +152,7 @@ const buscarCodigoLive = (codigo) => {
 
   //CREAMOS EL OBJETO EN BASE A LOS VALORES OBTENIDOS DEL DOM Y LO GUARDAMOS EN ARRAY
   //LLAMANDO A LA FUNCION CORRESPONDIENTE
-  const producto = new Producto (codigo,desc,marca,costo,markup,iva,precioVta,precioConIva)
+  const producto = new Producto (codigo,desc,marca,categoria,costo,markup,iva,precioVta,precioConIva)
   altaProducto(producto)
   ordenarArray(arrayProductos) ;
   localStorage.setItem('productos', JSON.stringify(arrayProductos))
@@ -135,6 +173,7 @@ const buscarCodigoLive = (codigo) => {
                             <th scope="row">${producto.codigo} </th>
                             <td>${producto.desc} </td>
                             <td>${producto.marca} </td>
+                            <td>${producto.categoria} </td>
                             <td>$ ${producto.costo} </td>
                             <td>${producto.markup}% </td>
                             <td>${producto.porcentajeDeIva}% </td>
@@ -186,3 +225,4 @@ const buscarCodigoLive = (codigo) => {
     
     actualizarTabla()
   })
+  

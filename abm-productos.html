@@ -37,7 +37,6 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav ms-auto">
             <a class="nav-link" href="./index.html">Inicio</a>
-            <a class="nav-link" href="./abm-categorias.html">ABM Categorías</a>
             <a class="nav-link active" href="./abm-productos.html">ABM Productos</a>
             <a class="nav-link" href="./comprobante-entrada.html">Fact. Proveedor</a>
             <a class="nav-link" href="./comprobante-salida.html">Facturar Productos</a>
@@ -61,12 +60,11 @@
         </div>
         <div class="col-md-4">
           <label for="validationCustom02" class="form-label">Categoría</label>
+          <!--SELECT PARA CATEGORIAS -->
           <select id="categoria" class="form-select" aria-label="Default select example">
-            <option selected>Seleccione una categoría</option>
-            <option value="1">Algo</option>
-            <option value="2">Otra</option>
-            <option value="3">Alguna</option>
+            <option value="0">SELECCIONAR CATEGORÍA</option>
           </select>
+
         </div>
         <div class="col-md-4">
           <label for="validationCustom02" class="form-label">Marca:</label>
@@ -120,6 +118,7 @@
             <th scope="col">Codigo</th>
             <th scope="col">Descripcion</th>
             <th scope="col">Marca</th>
+            <th scope="col">Categoría</th>
             <th scope="col">Costo</th>
             <th scope="col">Margen</th>
             <th scope="col">IVA</th>
@@ -128,15 +127,7 @@
         </thead>
         <tbody id="cuerpo-tabla">
 
-          <!-- <tr>
-            <th scope="row">002</th>
-            <td>Jugo Tang de Naranja Dulce</td>
-            <td>Tang</td>
-            <td>$20</td>
-            <td>50%</td>
-            <td>21%</td>
-            <td><button class="btn btn-primary mx-2">editar</button><button class="btn btn-danger">eliminar</button>
-          </tr> -->
+
       </table>
     </div>
     <div id="productos-DOM" class="row container-fluid mt-3 mb-3">
@@ -201,6 +192,9 @@
           }, false)
         })
     })()</script>
+  <!--JQUERY-->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <script src="./js/main.js"></script>
 </body>
 
