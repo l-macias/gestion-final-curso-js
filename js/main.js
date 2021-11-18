@@ -53,20 +53,23 @@ class Producto {
     let inputCategoria = document.getElementById('editar-categoria')
     inputCategoria.value = arrayProductos[indice].categoria
     let inputCosto = document.getElementById('editar-costo')
-    inputCosto.value += arrayProductos[indice].costo
+    inputCosto.value =+ arrayProductos[indice].costo
     let inputMarkup = document.getElementById('editar-margen')
-    inputMarkup.value = arrayProductos[indice].markup;
-    //SECCION A COMPLETAR PARA QUE ME LEA EL RADIO AL EDITAR
+    inputMarkup.value =+ arrayProductos[indice].markup;
     let radioIva = document.querySelectorAll('input[name=radio-iva]:checked')
-    radioIva.value += radioIva[0].value
-    
+    //Capturamos el evento del RADIO del IVA y devolvemos el valor
+    document.addEventListener('input',(e)=>{
+
+      if (e.target.getAttribute('name')=="radio-iva")
+    radioIva =+ e.target.value;
+    })
     //CUANDO HACEMOS CLICK EN EL GUARDAR DEL MODAL REALIZA LOS CAMBIOS. ELIMINA EL ANTERIOR CODIGO
     //Y LO REEMPLAZA POR EL NUEVO EDITADO.
     btnConfirmar.onclick = () => {
       buscarCodigoProducto(inputCodigo.value)
       eliminarProducto(resultadoBusqueda.codigo);
       
-      const producto = new Producto (inputCodigo.value,inputDesc.value,inputMarca.value,inputCategoria.value,inputCosto.value,inputMarkup.value,radioIva.value)
+      const producto = new Producto (inputCodigo.value,inputDesc.value,inputMarca.value,inputCategoria.value,inputCosto.value,inputMarkup.value,radioIva)
       altaProducto(producto)
       ordenarArray(arrayProductos) ;
       localStorage.setItem('productos', JSON.stringify(arrayProductos))
