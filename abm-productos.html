@@ -18,6 +18,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;300;400;700&display=swap" rel="stylesheet">
   <!-- Libreria Animate CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <!-- CSS -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+  <!-- Bootstrap Alertifyjs theme -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css" />
   <!-- Mi hoja de Estilos-->
   <link rel="stylesheet" href="./css/styles.css">
 </head>
@@ -85,7 +89,7 @@
         <!-- Radio para el IVA-->
         <div class="row mt-3">
           <div class="form-check col-md-1">
-            <input type="radio" class="form-check-input" id="iva21" name="radio-stacked" value="21">
+            <input type="radio" class="form-check-input" id="iva21" name="radio-stacked" value="21" checked>
             <label class="form-check-label" for="validationFormCheck2">IVA 21%</label>
           </div>
           <div class="form-check col-md-1">
@@ -97,7 +101,7 @@
           <!-- Botones -->
           <div class="col-12 text-center">
             <button id="boton-limpiar" class="btn btn-primary formulario__btn" type="reset">Limpiar</button>
-            <button id="boton-enviar" class="btn btn-primary formulario__btn" type="button">Enviar</button>
+            <button id="boton-agregar" class="btn btn-primary formulario__btn" type="button">Agregar</button>
           </div>
       </form>
     </section>
@@ -132,7 +136,61 @@
     </div>
     <div id="productos-DOM" class="row container-fluid mt-3 mb-3">
     </div>
+    <!--MODAL DE MODIFICAR-->
+    <div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 id="tituloModal">Editar Producto</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Codigo:</label>
+                <input type="text" class="form-control" id="editar-codigo">
+              </div>
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Descripción:</label>
+                <input type="text" class="form-control" id="editar-desc">
+              </div>
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Marca:</label>
+                <input type="text" class="form-control" id="editar-marca">
+              </div>
+              <div class="mb-3">
+                <select id="editar-categoria" class="form-select" aria-label="Default select example">
+                  <option value="0">SELECCIONAR CATEGORÍA</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Costo:</label>
+                <input type="text" class="form-control" id="editar-costo">
+              </div>
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Margen:</label>
+                <input type="text" class="form-control" id="editar-margen">
+              </div>
+              <div class="mb-3">
+                <div class="form-check col-md-3">
+                  <input type="radio" class="form-check-input" id="editar-iva21" name="radio-iva" value="21" checked>
+                  <label class="form-check-label" for="validationFormCheck2">IVA 21%</label>
+                </div>
+                <div class="form-check col-md-3">
+                  <input type="radio" class="form-check-input" id="editar-iva105" name="radio-iva" value="10.5">
+                  <label class="form-check-label" for="validationFormCheck3">IVA 10.5%</label>
+                  <div class="invalid-feedback">Tienes que elegir uno de los 2.</div>
+                </div>
 
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" id="confirmar-editar" class="btn btn-primary">Editar</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
   <!-- Footer -->
   <footer class="bg-dark text-white align-items-center">
@@ -192,9 +250,24 @@
           }, false)
         })
     })()</script>
+
   <!--JQUERY-->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <!--Script Modal-->
+  <script>
+
+    $('#exampleModal').on('show.bs.modal', function (event) {
+      var button = $(event.relatedTarget) // Button that triggered the modal
+      var recipient = button.data('whatever') // Extract info from data-* attributes
+      // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+      // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+      var modal = $(this)
+      modal.find('.modal-title').text('New message to ' + recipient)
+      modal.find('.modal-body input').val(recipient)
+    })</script>
+  <!-- Alertify JavaScript -->
+  <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
   <script src="./js/main.js"></script>
 </body>
 

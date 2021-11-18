@@ -18,6 +18,36 @@ for (const cargarCodigo of importProductos){
                     >
                     ${cargarCodigo.codigo}</option>`)
 }
+let cuerpoTablaCarga = document.getElementById('cuerpo-tabla-entrada')
+//DIBUJAMOS LA TABLA DE LO CARGADO
+dibujarProductoEntrada = (carga) => {
+    
+  let filaProductosCarga = document.createElement('tr');
+      
+      filaProductosCarga.innerHTML = `  
+                            <th scope="row">${carga.cantidad} </th>
+                            <td>${carga.codigo} </td>
+                            <td>${carga.descripcion} </td>
+                            <td>${carga.pUnitario} </td>
+                            <td>$ ${carga.pTotal} </td>
+                            
+                            
+                                `;
+  let tdAccionesProductos = document.createElement ('td');
+  let botonEliminar = document.createElement('button');
+  botonEliminar.classList.add('btn','btn-danger');
+  botonEliminar.innerText = 'Eliminar';
+  botonEliminar.onclick = () => {
+    console.log (carga.codigo)
+    eliminarProducto (carga.codigo)
+    // actualizarTabla();
+    
+  }
+  tdAccionesProductos.appendChild (botonEliminar);
+  filaProductosCarga.appendChild (tdAccionesProductos);
+  cuerpoTablaCarga.appendChild (filaProductosCarga);
+  
+  }
 
 
 //MOSTRAMOS LA DESCRIPCION
@@ -67,13 +97,14 @@ $(`#select-codigo`).change( (cod) => {
 let cargaProductos = []
 const renderizarTabla= () => {
   cargaProductos.forEach ((carga) => {
+    dibujarProductoEntrada(carga)
 
+
+    
 })
 }
 
-dibujartablaCarga=() => {
-  
-}
+
 
 //ESCUCHAMOS EL BOTON DE AGREGAR Y PUSHEAMOS LA CARGA AL ARRAY
 formularioProductos.onsubmit = (e) => {
@@ -84,6 +115,7 @@ const detalleCarga = {
   descripcion: descripcion.value,
   pUnitario: Number(precioUnitario.value),
   pTotal: Number(inputPrecioTotal.value),
+  
 };
 console.log (detalleCarga)
 cargaProductos.push (detalleCarga)

@@ -1,6 +1,6 @@
-//Declaracion de clase Productos
+ //Declaración de URL para exportar las categorías desde el JSON
 const URL_CAT_JSON = "./json/categorias.json"
-
+//Declaracion de clase Productos
 class Producto {
   constructor (codigo,desc,marca,categoria,costo,markup,iva,precioVta,precioConIva){
               this.codigo = codigo;
@@ -18,23 +18,16 @@ class Producto {
   let arrayProductos = JSON.parse(localStorage .getItem('productos')) || [] 
   
   // FUNCION PARA BUSCAR EN ARRAY
-  const buscarCodigoProducto = (codigo) => {
-    codigo = codigo
-    const codigoBuscado = arrayProductos.find(codigoBuscado => codigoBuscado.codigo === codigo)
-    if (!codigoBuscado) {
-        alert ("El codigo solicitado no existe")
-    }
+  const  buscarCodigoProducto = (codigo) => {
+        const codigoBuscado = arrayProductos.find(codigoBuscado => codigoBuscado.codigo === codigo)
         return resultadoBusqueda = codigoBuscado;
   }
 
 // FUNCION PARA BUSCAR MIENTRAS ESCRIBIMOS
-const buscarCodigoLive = (codigo) => {
-  codigo = codigo
+  const buscarCodigoLive = (codigo) => {
+  
   const codigoBuscadoLive = arrayProductos.filter(codigoBuscadoLive => codigoBuscadoLive.codigo === codigo)
-  if (!codigoBuscadoLive) {
-      alert ("El codigo solicitado no existe")
-  }
-    return resultadoBusquedaLive = codigoBuscadoLive;
+  return resultadoBusquedaLive = codigoBuscadoLive;
   }
 
 
@@ -43,46 +36,74 @@ const buscarCodigoLive = (codigo) => {
     arrayProductos.push(producto)
     localStorage.setItem('productos', JSON.stringify(arrayProductos))
   }
-  //FUNCION PARA MODIFICAR UN PRODUCTO EN ARRAY
-  const modificarProducto = (codigo, desc) => {
+
+  const btnConfirmar = document.getElementById('confirmar-editar')
+  //FUNCION PARA MODIFICAR UN PRODUCTO EN ARRAY (EN DESARROLLO, CAMBIA SOLO LOS INPUT Y DEJA SIN CATEGORIA E IVA)
+  const modificarProducto = (codigo) => {
     const productoPorModificar = buscarCodigoProducto(codigo)
-    productoPorModificar.desc = desc; //SEGUIR EDITANDO ESTE BARDO
+    const indice = arrayProductos.indexOf(productoPorModificar)
+    let inputCodigo = document.getElementById('editar-codigo')
+    inputCodigo.value = arrayProductos[indice].codigo;
+    inputCodigo.disabled = true;
+    let inputDesc = document.getElementById('editar-desc')
+    inputDesc.value =arrayProductos[indice].desc;
+    let inputMarca = document.getElementById('editar-marca')
+    inputMarca.value = arrayProductos[indice].marca
+    //SECCION CATEGORIA A EDITAR (LLAMAR CATEGORIAS)
+    let inputCategoria = document.getElementById('editar-categoria')
+    inputCategoria.value = arrayProductos[indice].categoria
+    let inputCosto = document.getElementById('editar-costo')
+    inputCosto.value += arrayProductos[indice].costo
+    let inputMarkup = document.getElementById('editar-margen')
+    inputMarkup.value = arrayProductos[indice].markup;
+    //SECCION A COMPLETAR PARA QUE ME LEA EL RADIO AL EDITAR
+    let radioIva = document.querySelectorAll('input[name=radio-iva]:checked')
+    radioIva.value += radioIva[0].value
+    
+    //CUANDO HACEMOS CLICK EN EL GUARDAR DEL MODAL REALIZA LOS CAMBIOS. ELIMINA EL ANTERIOR CODIGO
+    //Y LO REEMPLAZA POR EL NUEVO EDITADO.
+    btnConfirmar.onclick = () => {
+      buscarCodigoProducto(inputCodigo.value)
+      eliminarProducto(resultadoBusqueda.codigo);
+      
+      const producto = new Producto (inputCodigo.value,inputDesc.value,inputMarca.value,inputCategoria.value,inputCosto.value,inputMarkup.value,radioIva.value)
+      altaProducto(producto)
+      ordenarArray(arrayProductos) ;
+      localStorage.setItem('productos', JSON.stringify(arrayProductos))
+      vaciarTabla()
+    }
   }
-  
   //FUNCION PARA ELIMINAR UN PRODUCTO EN ARRAY
   const eliminarProducto = (codigo) => {
-    
     const productoPorEliminar = buscarCodigoProducto(codigo)
     const indice = arrayProductos.indexOf(productoPorEliminar)
     arrayProductos.splice(indice, 1)
     localStorage.setItem('productos', JSON.stringify(arrayProductos))
     actualizarTabla()
   }
-  
   const formulario = document.getElementById('formulario-productos')
-  const btnEnviar = document.getElementById('boton-enviar')
+  const btnAgregar = document.getElementById('boton-agregar')
   let inputBuscar = document.getElementById('input-buscar')
   const btnBuscar = document.getElementById('boton-buscar')
   
-  //funcion ordenar array
+  //FUNCION ORDENAR ARRAY
   ordenarArray = ((array) => {
     array.sort ((a,b)=> {
-    if (a.codigo < b.codigo) {
-      return -1;
+      if (a.codigo < b.codigo) {
+        return -1;
     }
-    if (a.codigo > b.codigo) {
-      return 1;
+      if (a.codigo > b.codigo) {
+        return 1;
     }
-    return 0;
+      return 0;
     })
-    })
+  })
     //JSON CATEGORIAS
-    $.getJSON (URL_CAT_JSON, (categ, estado) => {
-
-      if ( estado !== 'success') {
-        throw new Error('No se realizó el get correctamente')
+  $.getJSON (URL_CAT_JSON, (categ, estado) => {
+    if ( estado !== 'success') {
+      throw new Error('No se realizó el get correctamente')
     }
-        for ( const categoria of categ ) {
+    for ( const categoria of categ ) {
       $('#categoria').append(`
               <option  
                   id="categoria-${categoria.idCategoria}"
@@ -90,39 +111,33 @@ const buscarCodigoLive = (codigo) => {
                   > 
                   ${ categoria.nombreCategoria }
               </option>
-          `)
+      `)
   } 
 })
-
-
+// FUNCION DONDE ESCUCHAMOS EL CHANGE DEL SELECT CATEGORIA Y LO DEVOLVEMOS 
 let categoriaSeleccionada= ""
 const escucharCategoria = () =>{
-$(`#categoria`).change( (cat) => {
-  categoriaSelect = cat.target.value
-  
-  return categoriaSeleccionada = categoriaSelect;
+  $(`#categoria`).change( (cat) => {
+    categoriaSelect = cat.target.value
+    return categoriaSeleccionada = categoriaSelect;
   })
-  
 }
-
 escucharCategoria()
+//ESCUCHAMOS EL BOTON AGREGAR
+    btnAgregar.addEventListener('click', (e)=>{
+      e.preventDefault()
+      vaciarTabla()
 
-    //ESCUCHAMOS EL BOTON ENVIAR
-    btnEnviar.addEventListener('click', (e)=>{
-    e.preventDefault()
-    vaciarTabla()
-    
-  //FUNCIONES DE CALCULOS
-    let precioVta;
-    calcularPrecioVta =  () =>{
-      precioVta = (costo * markup /100) +(costo)
-      
-        return precioVta;
-        }
-  let precioConIva;
-  calcularPrecioConIva = () => {
-    return precioConIva = (precioVta*iva/100) + (precioVta);
-  }
+//FUNCIONES DE CALCULOS
+let precioVta;
+calcularPrecioVta =  () =>{
+  precioVta = (costo * markup /100) +(costo)
+  return precioVta;
+}
+let precioConIva;
+calcularPrecioConIva = () => {
+return precioConIva = (precioVta*iva/100) + (precioVta);
+}
   
   //Capturamos información del DOM
   let inputCodigo = document.getElementById('codigo')
@@ -131,9 +146,6 @@ escucharCategoria()
   let inputCosto = document.getElementById('costo')
   let inputMarkup = document.getElementById('markup')
   let radioIva = document.querySelectorAll('input[type=radio]:checked')
-  
-  
-  
   const codigo = inputCodigo.value;
   const desc = inputDesc.value;
   const marca = inputMarca.value;
@@ -142,20 +154,35 @@ escucharCategoria()
   const markup =+ inputMarkup.value;
   const iva =+ radioIva[0].value;
   
-  
-  
   calcularPrecioVta()
   calcularPrecioConIva();
   
-  
-  formulario.reset();
-
-  //CREAMOS EL OBJETO EN BASE A LOS VALORES OBTENIDOS DEL DOM Y LO GUARDAMOS EN ARRAY
-  //LLAMANDO A LA FUNCION CORRESPONDIENTE
-  const producto = new Producto (codigo,desc,marca,categoria,costo,markup,iva,precioVta,precioConIva)
-  altaProducto(producto)
-  ordenarArray(arrayProductos) ;
-  localStorage.setItem('productos', JSON.stringify(arrayProductos))
+  //VALIDAMOS QUE NO EXISTA EL CÓDIGO Y SINO LO PISAMOS
+  buscarCodigoProducto (codigo)
+  // SI NO EXISTE RESULTADOBUSQUEDA, QUE PROCEDA A DAR DE ALTA
+  // SINO QUE ELIMINE  EL ANTERIOR Y CREE UNO NUEVO
+  // Y LE AÑADI ALERTIFY PARA CONFIRMAR QUE ESTAMOS MODIFICANDO.
+      if (!resultadoBusqueda){
+        const producto = new Producto (codigo,desc,marca,categoria,costo,markup,iva,precioVta,precioConIva)
+        altaProducto(producto)
+        ordenarArray(arrayProductos) ;
+        localStorage.setItem('productos', JSON.stringify(arrayProductos))
+        }
+      else if (resultadoBusqueda.codigo == codigo) {
+        alertify.confirm(`El código: ${codigo} ya existe. ¿Desea Reemplazarlo con los nuevos datos ingresados?`,
+        function(){
+          alertify.success(`Artículo con Código: ${codigo} modificado correctamente.`);
+          eliminarProducto(resultadoBusqueda.codigo);
+          vaciarTabla()
+          const producto = new Producto (codigo,desc,marca,categoria,costo,markup,iva,precioVta,precioConIva)
+          altaProducto(producto)
+          ordenarArray(arrayProductos) ;
+          localStorage.setItem('productos', JSON.stringify(arrayProductos))
+      },
+      function(){
+        alertify.error('Modificación Cancelada');
+      });
+    }
   })
   
   let cuerpoTabla = document.getElementById('cuerpo-tabla')
@@ -166,10 +193,8 @@ escucharCategoria()
   }
   //funcion DIBUJAR AL PRODUCTO EN LA TABLA
   dibujarProducto = (producto) => {
-    
-  let filaProductos = document.createElement('tr');
-      
-      filaProductos.innerHTML = `  
+    let filaProductos = document.createElement('tr');
+    filaProductos.innerHTML = `  
                             <th scope="row">${producto.codigo} </th>
                             <td>${producto.desc} </td>
                             <td>${producto.marca} </td>
@@ -177,52 +202,54 @@ escucharCategoria()
                             <td>$ ${producto.costo} </td>
                             <td>${producto.markup}% </td>
                             <td>${producto.porcentajeDeIva}% </td>
-                                `;
-  let tdAccionesProductos = document.createElement ('td');
-  let botonEditar = document.createElement('button');
-  botonEditar.classList.add('btn', 'btn-primary')
-  botonEditar.innerText = 'Editar';
-  let botonEliminar = document.createElement('button');
-  botonEliminar.classList.add('btn','btn-danger');
-  botonEliminar.innerText = 'Eliminar';
-  botonEliminar.onclick = () => {
-    console.log (producto.codigo)
+                              `;
+    let tdAccionesProductos = document.createElement ('td');
+    //CREAMOS BOTON ASIGNADO EN EL MODAL.
+    let botonEditar = document.createElement('b');
+    botonEditar.innerHTML = `<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEditar"
+    data-bs-whatever="editarProductos">Editar</button>
+                            `
+    //CREAMOS BOTON ELIMINAR
+    let botonEliminar = document.createElement('button');
+    botonEliminar.classList.add('btn','btn-danger');
+    botonEliminar.innerText = 'Eliminar';
+    //CUANDO SE HACE CLICK EN ELIMINAR LLAMAMOS A LA FUNCION ELIMINARPRODUCTO
+    botonEliminar.onclick = () => {
     eliminarProducto (producto.codigo)
     actualizarTabla();
-    
   }
+  //LLAMADA A BOTON EDITAR.
+  botonEditar.onclick = () => {
+    modificarProducto(producto.codigo)
+  }
+  //UBICAMOS LOS BOTONES 
   tdAccionesProductos.appendChild (botonEditar);
   tdAccionesProductos.appendChild (botonEliminar);
   filaProductos.appendChild (tdAccionesProductos);
   cuerpoTabla.appendChild (filaProductos);
-  
   }
-  
+
   //FUNCION QUE ACTUALIZA LA TABLA Y MUESTRA TODO
   const actualizarTabla = () => {
     vaciarTabla();
-      arrayProductos.forEach ((producto) => {
-  
+    arrayProductos.forEach ((producto) => {
     dibujarProducto(producto);
-  }) ;
-    
-    }
+    })
+  }
   
   //ESCUCHAMOS EL EVENTO KEYUP DEL INPUT BUSCAR  (ANTES USABA EL BOTON, TENGO QUE BORRAR Y PONER LABEL)
     const Buscar = inputBuscar;
     Buscar.addEventListener ('keyup', (e) => {
-    e.preventDefault();
-    vaciarTabla();
-    buscarCodigoLive(inputBuscar.value);
-    resultadoBusquedaLive.forEach((resultadoBusquedaLive) => {
+      e.preventDefault();
+      vaciarTabla();
+      buscarCodigoLive(inputBuscar.value);
+      resultadoBusquedaLive.forEach((resultadoBusquedaLive) => {
       dibujarProducto(resultadoBusquedaLive);
-        })
-        })
+      })
+    })
     
   // ESCUCHAMOS BOTON MOSTRAR TODOS 
-  btnMostrarTodos.addEventListener('click',(e) => {
-    e.preventDefault();
-    
-    actualizarTabla()
+    btnMostrarTodos.addEventListener('click',(e) => {
+      e.preventDefault();
+      actualizarTabla()
   })
-  
