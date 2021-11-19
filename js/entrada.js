@@ -19,11 +19,14 @@ for (const cargarCodigo of importProductos){
                     ${cargarCodigo.codigo}</option>`)
 }
 let cuerpoTablaCarga = document.getElementById('cuerpo-tabla-entrada')
+
+
 //DIBUJAMOS LA TABLA DE LO CARGADO
+
 dibujarProductoEntrada = (carga) => {
     
   let filaProductosCarga = document.createElement('tr');
-      
+      filaProductosCarga.setAttribute("class", "carga")
       filaProductosCarga.innerHTML = `  
                             <th scope="row">${carga.cantidad} </th>
                             <td>${carga.codigo} </td>
@@ -46,10 +49,11 @@ dibujarProductoEntrada = (carga) => {
   tdAccionesProductos.appendChild (botonEliminar);
   filaProductosCarga.appendChild (tdAccionesProductos);
   cuerpoTablaCarga.appendChild (filaProductosCarga);
-  
+  vaciarTablaCarga()
   }
-
-
+  vaciarTablaCarga = () =>{
+    cuerpoTablaCarga.innerHTML("")
+  }
 //MOSTRAMOS LA DESCRIPCION
 // const eliminarProducto = (codigo) => {
 //   codigo=codigoSeleccionado
@@ -98,7 +102,7 @@ let cargaProductos = []
 const renderizarTabla= () => {
   cargaProductos.forEach ((carga) => {
     dibujarProductoEntrada(carga)
-
+    
 
     
 })
@@ -107,7 +111,7 @@ const renderizarTabla= () => {
 
 
 //ESCUCHAMOS EL BOTON DE AGREGAR Y PUSHEAMOS LA CARGA AL ARRAY
-formularioProductos.onsubmit = (e) => {
+btnAgregar.addEventListener('click', (e)=>{
   e.preventDefault()
 const detalleCarga = {
   codigo: codigo.value,
@@ -119,8 +123,10 @@ const detalleCarga = {
 };
 console.log (detalleCarga)
 cargaProductos.push (detalleCarga)
+localStorage.setItem('productoscarga', JSON.stringify(importProductos))
+
 renderizarTabla()
-}
+})
 
 
 

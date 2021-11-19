@@ -74,6 +74,9 @@ class Producto {
     let inputMarkup = document.getElementById('editar-margen')
     inputMarkup.value =+ arrayProductos[indice].markup;
     let editarIva;
+
+    //****PARA VALIDAR PODRÍA HACER UN IF SI IVA ES 21% CHECK OPT 1 
+    //****SI ES 10.5 CHECK OPTION 2 */
     
        //CUANDO HACEMOS CLICK EN EL GUARDAR DEL MODAL REALIZA LOS CAMBIOS. ELIMINA EL ANTERIOR CODIGO
     //Y LO REEMPLAZA POR EL NUEVO EDITADO.
