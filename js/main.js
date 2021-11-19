@@ -49,27 +49,50 @@ class Producto {
     inputDesc.value =arrayProductos[indice].desc;
     let inputMarca = document.getElementById('editar-marca')
     inputMarca.value = arrayProductos[indice].marca
-    //SECCION CATEGORIA A EDITAR (LLAMAR CATEGORIAS)
+    //SECCION CATEGORIA (LLAMAR CATEGORIAS)
     let inputCategoria = document.getElementById('editar-categoria')
+    
+    $.getJSON (URL_CAT_JSON, (categ, estado) => {
+      if ( estado !== 'success') {
+        throw new Error('No se realizó el get correctamente')
+      }
+      for ( const categoria of categ ) {
+        $('#editar-categoria').append(`
+                <option  
+                    id="editar-categoria-${categoria.idCategoria}"
+                    value="${categoria.nombreCategoria}"
+                    > 
+                    ${ categoria.nombreCategoria }
+                </option>
+        `)
+    } 
+  })
+    inputCategoria.innerHTML = "";
     inputCategoria.value = arrayProductos[indice].categoria
     let inputCosto = document.getElementById('editar-costo')
     inputCosto.value =+ arrayProductos[indice].costo
     let inputMarkup = document.getElementById('editar-margen')
     inputMarkup.value =+ arrayProductos[indice].markup;
-    let radioIva = document.querySelectorAll('input[name=radio-iva]:checked')
+    let modal = document.getElementById('modalEditar')
+    let radioIva = modal.querySelectorAll('input[name=radio-iva]:checked')
+    //MODIFICAR
+    editarIva = radioIva[indice].value;
     //Capturamos el evento del RADIO del IVA y devolvemos el valor
-    document.addEventListener('input',(e)=>{
+    
+    
+    // modal.addEventListener('input',(e)=>{
 
-      if (e.target.getAttribute('name')=="radio-iva")
-    radioIva =+ e.target.value;
-    })
+    //   if (e.target.getAttribute('name')=="radio-iva")
+    // radioIva =+ e.target.value;
+    // })
     //CUANDO HACEMOS CLICK EN EL GUARDAR DEL MODAL REALIZA LOS CAMBIOS. ELIMINA EL ANTERIOR CODIGO
     //Y LO REEMPLAZA POR EL NUEVO EDITADO.
     btnConfirmar.onclick = () => {
+      
       buscarCodigoProducto(inputCodigo.value)
       eliminarProducto(resultadoBusqueda.codigo);
       
-      const producto = new Producto (inputCodigo.value,inputDesc.value,inputMarca.value,inputCategoria.value,inputCosto.value,inputMarkup.value,radioIva)
+      const producto = new Producto (inputCodigo.value,inputDesc.value,inputMarca.value,inputCategoria.value,inputCosto.value,inputMarkup.value,editarIva)
       altaProducto(producto)
       ordenarArray(arrayProductos) ;
       localStorage.setItem('productos', JSON.stringify(arrayProductos))
