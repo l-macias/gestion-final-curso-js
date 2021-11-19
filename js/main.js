@@ -73,22 +73,17 @@ class Producto {
     inputCosto.value =+ arrayProductos[indice].costo
     let inputMarkup = document.getElementById('editar-margen')
     inputMarkup.value =+ arrayProductos[indice].markup;
-    let modal = document.getElementById('modalEditar')
-    let radioIva = modal.querySelectorAll('input[name=radio-iva]:checked')
-    //MODIFICAR
-    editarIva = radioIva[indice].value;
-    //Capturamos el evento del RADIO del IVA y devolvemos el valor
+    let editarIva;
     
-    
-    // modal.addEventListener('input',(e)=>{
-
-    //   if (e.target.getAttribute('name')=="radio-iva")
-    // radioIva =+ e.target.value;
-    // })
-    //CUANDO HACEMOS CLICK EN EL GUARDAR DEL MODAL REALIZA LOS CAMBIOS. ELIMINA EL ANTERIOR CODIGO
+       //CUANDO HACEMOS CLICK EN EL GUARDAR DEL MODAL REALIZA LOS CAMBIOS. ELIMINA EL ANTERIOR CODIGO
     //Y LO REEMPLAZA POR EL NUEVO EDITADO.
     btnConfirmar.onclick = () => {
-      
+      if (document.getElementById('editar-iva21').checked) {
+        editarIva = 21
+        }
+        else if (document.getElementById('editar-iva105').checked) {
+          editarIva = 10.5
+        }
       buscarCodigoProducto(inputCodigo.value)
       eliminarProducto(resultadoBusqueda.codigo);
       
