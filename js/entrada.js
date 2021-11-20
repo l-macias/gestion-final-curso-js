@@ -2,7 +2,7 @@
 let importProductos = JSON.parse(localStorage .getItem('productos')) || [] 
 
 // FUNCION PARA BUSCAR EN ARRAY
-const buscarCodigoProducto = (codigo) => {
+const buscarCodigoProductoCarga = (codigo) => {
   
   const codigoBuscado = importProductos.find(codigoBuscado => codigoBuscado.codigo === codigo)
   if (!codigoBuscado) {
@@ -10,6 +10,25 @@ const buscarCodigoProducto = (codigo) => {
   }
       return resultadoBusqueda = codigoBuscado;
 }
+
+const buscarCodigoProductoCarga2 = (codigo) => {
+  
+  const codigoBuscado = cargaProductos.find(codigoBuscado => codigoBuscado.codigo === codigo)
+  if (!codigoBuscado) {
+      console.log("nada")
+  }
+      return resultadoBusqueda = codigoBuscado;
+}
+
+
+const eliminarProductoCarga = (codigo) => {
+  const productoPorEliminar = buscarCodigoProductoCarga2(codigo)
+  const indice = cargaProductos.indexOf(productoPorEliminar)
+  cargaProductos.splice(indice, 1)
+  localStorage.setItem('cargaproductos', JSON.stringify(cargaProductos))
+  actualizarTablaCarga()
+}
+
 
 for (const cargarCodigo of importProductos){
   $('#select-codigo').append (`
@@ -47,7 +66,9 @@ const dibujarProductoEntrada = (carga) => {
   botonEliminar.innerText = 'Eliminar';
   botonEliminar.onclick = () => {
     console.log (carga.codigo)
-    eliminarProducto (carga.codigo)
+    eliminarProductoCarga (carga.codigo)
+    actualizarTablaCarga();
+  
     
     
   }
@@ -61,21 +82,6 @@ const dibujarProductoEntrada = (carga) => {
     cuerpoTablaCarga.innerHTML ="";
   }
   
-  // const actualizarTablaCarga = () => {
-  //   vaciarTablaCarga();
-  //   cargaProductos.forEach ((carga) => {
-  //   dibujarProductoEntrada(carga);
-  //   })
-  // }
-//MOSTRAMOS LA DESCRIPCION
-// const eliminarProducto = (codigo) => {
-//   codigo=codigoSeleccionado
-//   const productoPorEliminar = buscarCodigoProducto(codigo)
-//   const indice = importProductos.indexOf(productoPorEliminar)
-//   $(`#input-descripcion`).val( `${importProductos[indice].desc}`)
-//   $(`#input-precio-unitario`).val( `${importProductos[indice].costo}`)
-// }
-
 const valorTotal = () => {
   let inputCantidad = $(`#input-cantidad`) 
   pTotal = importProductos[indice].costo * inputCantidad
@@ -92,12 +98,10 @@ const precioUnitario = document.getElementById('input-precio-unitario')
 const inputPrecioTotal = document.getElementById('input-precio-total')
 const btnAgregar =document.getElementById('boton-agregar')
 
-
-
 $(`#select-codigo`).change( (cod) => {
   codigoSelect = cod.target.value
-    const productoPorEliminar = buscarCodigoProducto(codigoSelect)
-  const indice = importProductos.indexOf(productoPorEliminar)
+    const productoPorModificar = buscarCodigoProductoCarga(codigoSelect)
+  const indice = importProductos.indexOf(productoPorModificar)
   $(`#input-descripcion`).val( `${importProductos[indice].desc}`)
   $(`#input-precio-unitario`).val(`${importProductos[indice].costo}`)
   preTotal = precioUnitario.value * cantidad.value;
@@ -108,8 +112,6 @@ $(`#select-codigo`).change( (cod) => {
     $(`#input-precio-total`).val (preTotal);
   })
 })
-  
-
 
 let cargaProductos = JSON.parse(localStorage .getItem('cargaproductos')) || []
 
@@ -122,8 +124,6 @@ const renderizarTabla= () => {
     
 })
 }
-
-
 
 //ESCUCHAMOS EL BOTON DE AGREGAR Y PUSHEAMOS LA CARGA AL ARRAY
 btnAgregar.addEventListener('click', (e)=>{
