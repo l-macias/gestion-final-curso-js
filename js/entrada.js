@@ -1,3 +1,36 @@
+//CABECERA DE FACTURA
+//Capturamos datos de los input y guardamos sus valores
+let inputRazonSocial = document.getElementById('razon-social')
+let inputCuit = document.getElementById('numero-cuit')
+let inputNroComprobante = document.getElementById('numero-comprobante')
+let inputFechaComprobante = document.getElementById('fecha-comprobante')
+
+class Comprobante {
+  constructor(razonSocial,cuit,nroComprobante,fechaComprobante){
+              this.razonSocial = razonSocial;
+              this.cuit = cuit;
+              this.nroComprobante = nroComprobante;
+              this.fechaComprobante = fechaComprobante;
+  }
+
+}
+
+let arrayCabecera = JSON.parse(localStorage .getItem ('comprobante')) || [];
+
+const btnCabecera = document.getElementById('boton-cabecera')
+btnCabecera.addEventListener ('click', (e) => {
+  e.preventDefault()
+const comprobante = new Comprobante (inputRazonSocial.value,inputCuit.value,inputNroComprobante.value,inputFechaComprobante.value)
+arrayCabecera.push (comprobante)
+localStorage.setItem('comprobante', JSON.stringify(arrayCabecera))
+inputRazonSocial.disabled = true
+inputCuit.disabled = true
+inputNroComprobante.disabled = true
+inputFechaComprobante.disabled = true
+})
+
+//AGREGAR PRODUCTOS//
+
 //IMPORTAMOS LOS PRODUCTOS ALMACENADOS EN LOCALSTORAGE 
 let importProductos = JSON.parse(localStorage .getItem('productos')) || [] 
 
@@ -162,7 +195,10 @@ else if (resultadoBusqueda2.codigo == codigo.value) {
 renderizarTabla()
 })
 
+
+
 //**NOTAS**//
+//Empezar cabecera//
 //Boton elminar, guardar cabecera y añadirla a la carga, 
 //Hacer que cuando la factura se guarde, se vacie el localstorage
 

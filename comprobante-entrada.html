@@ -52,82 +52,92 @@
   </header>
   <main>
     <!-- CABECERA DE LA FACTURA-->
-    <div class="row">
-      <div class="col">
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">Carga de comprobantes de Entrada</h3>
-          </div>
-          <div class="card-body">
-            <form class="row">
-              <div class="form-group col-md-5">Razón Social<label for=""></label>
-                <input id="razon-social" type="text" class="form-control" placeholder="Razón social del proveedor">
-              </div>
-              <div class="form-group col-md-2"><label for="">CUIT</label>
-                <input id="numero-cuit" type="number" class="form-control"
-                  placeholder="Nro de CUIT sin guión: Ej: 20123456780">
-              </div>
-              <div class="form-group col-md-3"><label for="">Nro Comprobante</label>
-                <input id="numero-comprobante" type="number" class="form-control"
-                  placeholder="Nro de Comprobante: Ej: 123456">
-              </div>
-              <div class="form-group col-md-2"><label for="">Fecha</label>
-                <input id="fecha-comprobante-entrada" type="date" class="form-control">
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--CARGA DE PRODUCTOS-->
-    <div class="row mt-3">
-      <div class="col">
-        <div class="card">
-          <div class="card-body">
-            <form id="formulario-productos" class="row">
-              <div id="contenedor-select-codigo" class="form-group col-md-2"><label for="">Código</label>
-                <select id="select-codigo" name="" id="input-codigo" class="form-control">
-                  <option value="0">--Seleccionar</option>
-                </select>
-              </div>
-              <div class="form-group col-md-1"><label for="">Cantidad</label>
-                <input id="input-cantidad" type="number" class="form-control">
-              </div>
-              <div class="form-group col-md-5"><label for="">Descripción</label>
-                <input id="input-descripcion" type="text" class="form-control" disabled>
-              </div>
-              <div class="form-group col-md-1"><label for="">P.Unitario</label>
-                <input id="input-precio-unitario" type="number" class="form-control" disabled>
-              </div>
-              <div class="form-group col-md-2"><label for="">P.Total</label>
-                <input id="input-precio-total" type="number" class="form-control" disabled>
-              </div>
-              <div class="form-group col-md-1"><button id="boton-agregar" type="button"
-                  class="btn mt-4 btn-primary">Agregar</button></div>
-            </form>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Carga de comprobantes de Entrada</h3>
+            </div>
+            <div class="card-body">
+              <form class="row">
+                <div class="form-group col-md-5">Razón Social<label for=""></label>
+                  <input id="razon-social" type="text" class="form-control" placeholder="Razón social del proveedor"
+                    required>
+                </div>
+                <div class="form-group col-md-2"><label for="">CUIT</label>
+                  <input id="numero-cuit" type="number" class="form-control"
+                    placeholder="Nro de CUIT sin guión: Ej: 20123456780" required>
+                </div>
+                <div class="form-group col-md-3"><label for="">Nro Comprobante</label>
+                  <input id="numero-comprobante" type="number" class="form-control"
+                    placeholder="Nro de Comprobante: Ej: 123456" required>
+                </div>
+                <div class="form-group col-md-2"><label for="">Fecha</label>
+                  <input id="fecha-comprobante" type="date" class="form-control" required>
+                </div>
+                <div class="form-group col-md-2 ms-auto"><button id="boton-cabecera" type="submit"
+                    class="btn mt-3 d-flex ms-auto btn-primary">Guardar Datos</button></div>
+
+              </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      <!--CARGA DE PRODUCTOS-->
+      <div class="row mt-3">
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <form id="formulario-productos" class="row">
+                <div id="contenedor-select-codigo" class="form-group col-md-2"><label for="">Código</label>
+                  <select id="select-codigo" name="" id="input-codigo" class="form-control">
+                    <option value="0">--Seleccionar</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-1"><label for="">Cantidad</label>
+                  <input id="input-cantidad" type="number" class="form-control">
+                </div>
+                <div class="form-group col-md-5"><label for="">Descripción</label>
+                  <input id="input-descripcion" type="text" class="form-control" disabled>
+                </div>
+                <div class="form-group col-md-1"><label for="">P.Unitario</label>
+                  <input id="input-precio-unitario" type="number" class="form-control" disabled>
+                </div>
+                <div class="form-group col-md-2"><label for="">P.Total</label>
+                  <input id="input-precio-total" type="number" class="form-control" disabled>
+                </div>
+                <div class="form-group col-md-1"><button id="boton-agregar" type="button"
+                    class="btn mt-4 btn-primary">Agregar</button></div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
 
-    <!--Mostrar la Factura-->
-    <div class="row">
-      <div class="col">
-        <table id="tabla-proveedores" class="table text-center mt-3 table-dark table-striped">
-          <thead>
-            <tr>
-              <th scope="col">Cantidad</th>
-              <th scope="col">Codigo</th>
-              <th scope="col">Descripción</th>
-              <th scope="col">P.Unit</th>
-              <th scope="col">P.Total</th>
-              <th scope="col">%IVA</th>
-            </tr>
-          </thead>
-          <tbody id="cuerpo-tabla-entrada">
+      <!--Mostrar la Factura-->
+      <div class="row">
+        <div class="col">
+          <table id="tabla-proveedores" class="table text-center mt-3 table-dark table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Codigo</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">P.Unit</th>
+                <th scope="col">P.Total</th>
+                <th scope="col">%IVA</th>
+              </tr>
+            </thead>
+            <tbody id="cuerpo-tabla-entrada">
 
 
-        </table>
+          </table>
+
+          <button id="boton-calcular" class="btn btn-secondary d-flex ms-auto mt-1 mb-2">Calcular Totales</button>
+          <button id="boton-generar" class="btn btn-success d-flex ms-auto mt-1 mb-2">Generar Factura</button>
+
+        </div>
       </div>
     </div>
   </main>
