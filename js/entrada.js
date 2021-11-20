@@ -17,7 +17,7 @@ const buscarCodigoProductoCarga2 = (codigo) => {
   if (!codigoBuscado) {
       console.log("nada")
   }
-      return resultadoBusqueda = codigoBuscado;
+      return resultadoBusqueda2 = codigoBuscado;
 }
 
 
@@ -137,10 +137,28 @@ const detalleCarga = {
   
 };
 console.log (detalleCarga)
+buscarCodigoProductoCarga2(codigo.value)
+console.log (`EL codigo de codigo en buscarreusltado es: ${codigo.value}`)
+if (!resultadoBusqueda2){
+  
 cargaProductos.push (detalleCarga)
-
 localStorage.setItem('cargaproductos', JSON.stringify(cargaProductos))
-
+}
+else if (resultadoBusqueda2.codigo == codigo.value) {
+  console.log (`EL resultadobusqueda2 en buscarreusltado es: ${resultadoBusqueda2}`)
+  alertify.confirm(`El código: ${codigo.value} ya existe. ¿Desea Reemplazarlo con los nuevos datos ingresados?`,
+        function(){
+          alertify.success(`Artículo con Código: ${codigo.value} modificado correctamente.`);
+          eliminarProductoCarga(resultadoBusqueda2.codigo);
+          
+          cargaProductos.push (detalleCarga)
+          localStorage.setItem('cargaproductos', JSON.stringify(cargaProductos))
+          renderizarTabla()
+        },
+        function(){
+          alertify.error('Modificación Cancelada');
+        });
+      }
 renderizarTabla()
 })
 

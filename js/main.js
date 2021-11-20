@@ -38,7 +38,7 @@ class Producto {
   }
 
   const btnConfirmar = document.getElementById('confirmar-editar')
-  //FUNCION PARA MODIFICAR UN PRODUCTO EN ARRAY (EN DESARROLLO, CAMBIA SOLO LOS INPUT Y DEJA SIN CATEGORIA E IVA)
+  //FUNCION PARA MODIFICAR UN PRODUCTO EN ARRAY 
   const modificarProducto = (codigo) => {
     const productoPorModificar = buscarCodigoProducto(codigo)
     const indice = arrayProductos.indexOf(productoPorModificar)
