@@ -80,7 +80,12 @@ class Producto {
     
        //CUANDO HACEMOS CLICK EN EL GUARDAR DEL MODAL REALIZA LOS CAMBIOS. ELIMINA EL ANTERIOR CODIGO
     //Y LO REEMPLAZA POR EL NUEVO EDITADO.
-    btnConfirmar.onclick = () => {
+    let mensajeEditar = document.getElementById('mensaje-editar')
+
+    btnConfirmar.addEventListener("click",(e)=>{
+      e.preventDefault()
+    
+    // onclick = () => {
       if (document.getElementById('editar-iva21').checked) {
         editarIva = 21
         }
@@ -95,8 +100,12 @@ class Producto {
       ordenarArray(arrayProductos) ;
       localStorage.setItem('productos', JSON.stringify(arrayProductos))
       vaciarTabla()
-    }
+      
+      mensajeEditar.className = 'editar-mensaje'
+    })
+    mensajeEditar.className = 'item-guardado'
   }
+
   //FUNCION PARA ELIMINAR UN PRODUCTO EN ARRAY
   const eliminarProducto = (codigo) => {
     const productoPorEliminar = buscarCodigoProducto(codigo)

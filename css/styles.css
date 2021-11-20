@@ -111,4 +111,14 @@ label {
   background-color: #000;
   border-color: white;
 }
+
+.item-guardado {
+  color: #8caf0d;
+  display: none;
+}
+
+.editar-mensaje {
+  color: #8caf0d;
+  display: block;
+}
 /*# sourceMappingURL=styles.css.map */
