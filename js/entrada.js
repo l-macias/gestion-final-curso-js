@@ -20,10 +20,15 @@ for (const cargarCodigo of importProductos){
 }
 let cuerpoTablaCarga = document.getElementById('cuerpo-tabla-entrada')
 
-
+const actualizarTablaCarga = () => {
+  vaciarTablaCarga();
+  cargaProductos.forEach ((carga) => {
+  dibujarProductoEntrada(carga);
+  })
+}
 //DIBUJAMOS LA TABLA DE LO CARGADO
 
-dibujarProductoEntrada = (carga) => {
+const dibujarProductoEntrada = (carga) => {
     
   let filaProductosCarga = document.createElement('tr');
       filaProductosCarga.setAttribute("class", "carga")
@@ -43,17 +48,25 @@ dibujarProductoEntrada = (carga) => {
   botonEliminar.onclick = () => {
     console.log (carga.codigo)
     eliminarProducto (carga.codigo)
-    // actualizarTabla();
+    
     
   }
   tdAccionesProductos.appendChild (botonEliminar);
   filaProductosCarga.appendChild (tdAccionesProductos);
   cuerpoTablaCarga.appendChild (filaProductosCarga);
-  vaciarTablaCarga()
+  
+  
   }
   vaciarTablaCarga = () =>{
-    cuerpoTablaCarga.innerHTML("")
+    cuerpoTablaCarga.innerHTML ="";
   }
+  
+  // const actualizarTablaCarga = () => {
+  //   vaciarTablaCarga();
+  //   cargaProductos.forEach ((carga) => {
+  //   dibujarProductoEntrada(carga);
+  //   })
+  // }
 //MOSTRAMOS LA DESCRIPCION
 // const eliminarProducto = (codigo) => {
 //   codigo=codigoSeleccionado
@@ -98,12 +111,14 @@ $(`#select-codigo`).change( (cod) => {
   
 
 
-let cargaProductos = []
-const renderizarTabla= () => {
-  cargaProductos.forEach ((carga) => {
-    dibujarProductoEntrada(carga)
-    
+let cargaProductos = JSON.parse(localStorage .getItem('cargaproductos')) || []
 
+const renderizarTabla= () => {
+  vaciarTablaCarga()
+  cargaProductos.forEach ((cargaproductos) => {
+    
+    dibujarProductoEntrada(cargaproductos)
+    
     
 })
 }
@@ -123,11 +138,15 @@ const detalleCarga = {
 };
 console.log (detalleCarga)
 cargaProductos.push (detalleCarga)
-localStorage.setItem('productoscarga', JSON.stringify(importProductos))
+
+localStorage.setItem('cargaproductos', JSON.stringify(cargaProductos))
 
 renderizarTabla()
 })
 
+//**NOTAS**//
+//Boton elminar, guardar cabecera y añadirla a la carga, 
+//Hacer que cuando la factura se guarde, se vacie el localstorage
 
 
 
