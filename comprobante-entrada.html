@@ -107,6 +107,10 @@
                 <div class="form-group col-md-2"><label for="">P.Total</label>
                   <input id="input-precio-total" type="number" class="form-control" disabled>
                 </div>
+                <div class="form-group col-md-1"><label for="">IVA</label>
+                  <input id="input-porcentaje-iva" type="number" class="form-control" disabled>
+                </div>
+
                 <div class="form-group col-md-1"><button id="boton-agregar" type="button"
                     class="btn mt-4 btn-primary">Agregar</button></div>
               </form>
@@ -127,6 +131,7 @@
                 <th scope="col">P.Unit</th>
                 <th scope="col">P.Total</th>
                 <th scope="col">%IVA</th>
+                <th scope="col">Acciones</th>
               </tr>
             </thead>
             <tbody id="cuerpo-tabla-entrada">
@@ -134,12 +139,28 @@
 
           </table>
 
-          <button id="boton-calcular" class="btn btn-secondary d-flex ms-auto mt-1 mb-2">Calcular Totales</button>
+          <button id="boton-calcular" class="btn btn-secondary d-flex ms-auto mt-1 mb-2" data-bs-toggle="modal"
+            data-bs-target="#modalTotales">Calcular Totales</button>
           <button id="boton-generar" class="btn btn-success d-flex ms-auto mt-1 mb-2">Generar Factura</button>
 
         </div>
       </div>
     </div>
+    <!--MODAL DE TOTALES-->
+    <div class="modal fade" id="modalTotales" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 id="tituloModal">TOTALES</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+
+          <div id="modal-totales-body" class="modal-body">
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          </div>
   </main>
 
   <!-- Footer -->

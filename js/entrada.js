@@ -90,7 +90,7 @@ const dibujarProductoEntrada = (carga) => {
                             <td>${carga.descripcion} </td>
                             <td>${carga.pUnitario} </td>
                             <td>$ ${carga.pTotal} </td>
-                            
+                            <td> ${carga.porcentIva}
                             
                                 `;
   let tdAccionesProductos = document.createElement ('td');
@@ -120,6 +120,8 @@ const valorTotal = () => {
   pTotal = importProductos[indice].costo * inputCantidad
 }
 
+
+
 // RECUPERAMOS DATOS DEL FORMULARIO Y ESCUCHAMOS EL CHANGE DEL SELECT  
 // PARA AÑADIR LOS DATOS DEL PRODUCTO SELECCIONADO.
 
@@ -130,6 +132,8 @@ const descripcion =document.getElementById('input-descripcion')
 const precioUnitario = document.getElementById('input-precio-unitario')
 const inputPrecioTotal = document.getElementById('input-precio-total')
 const btnAgregar =document.getElementById('boton-agregar')
+const porcentajedeIva = document.getElementById('input-porcentaje-iva')
+
 
 $(`#select-codigo`).change( (cod) => {
   codigoSelect = cod.target.value
@@ -139,10 +143,12 @@ $(`#select-codigo`).change( (cod) => {
   $(`#input-precio-unitario`).val(`${importProductos[indice].costo}`)
   preTotal = precioUnitario.value * cantidad.value;
   $(`#input-precio-total`).val (preTotal);
+  $(`#input-porcentaje-iva`).val (`${importProductos[indice].porcentajeDeIva}`)
   //ESCUCHAMOS SI CAMBIA EL VALOR DE CANTIDAD CON CLICK O CON EL TECLADO Y REALIZAMOS EL CALCULO
   $(`#input-cantidad`).on('keyup change', function (){
     preTotal = precioUnitario.value * cantidad.value;
     $(`#input-precio-total`).val (preTotal);
+    
   })
 })
 
@@ -161,13 +167,15 @@ const renderizarTabla= () => {
 //ESCUCHAMOS EL BOTON DE AGREGAR Y PUSHEAMOS LA CARGA AL ARRAY
 btnAgregar.addEventListener('click', (e)=>{
   e.preventDefault()
+  ivaTotal = porcentajedeIva.value /100 * preTotal;
 const detalleCarga = {
   codigo: codigo.value,
   cantidad: Number(cantidad.value),
   descripcion: descripcion.value,
   pUnitario: Number(precioUnitario.value),
   pTotal: Number(inputPrecioTotal.value),
-  
+  porcentIva: Number(porcentajedeIva.value),
+  ivaTotal: Number(ivaTotal)
 };
 console.log (detalleCarga)
 buscarCodigoProductoCarga2(codigo.value)
@@ -193,6 +201,60 @@ else if (resultadoBusqueda2.codigo == codigo.value) {
         });
       }
 renderizarTabla()
+})
+const btnCalcular = document.getElementById('boton-calcular')
+let subtotal;
+let iva105Total;
+let iva21Total;
+let total;
+//FUNCION QUE CALCULA CADA IVA DISCRIMINADO
+
+const calcularIvaTotal = () =>{
+  iva105Total=0;
+  iva21Total=0;
+  cargaProductos.forEach ((prod) => {
+    if (prod['porcentIva'] == 21) {
+      iva21Total += prod['ivaTotal'];
+        
+  
+    }
+    else {
+      iva105Total += prod['ivaTotal'];
+  }
+  })
+  }
+
+
+//FUNCION QUE CALCULA SUBTOTAL
+const calcularSubtotal = () =>{
+  subtotal=0;
+  cargaProductos.forEach ((prod) => {
+    
+    subtotal += prod["pTotal"];
+    
+  })
+  }
+//FUNCION QUE SUMA LOS TOTALES
+const calcularTotal = () => {
+  total=0;
+  total = subtotal+iva105Total+iva21Total;
+}
+
+let modalBody = document.getElementById('modal-totales-body')
+btnCalcular.addEventListener('click', (e)=>{
+  e.preventDefault();
+
+  calcularSubtotal();
+  calcularIvaTotal();
+  calcularTotal();
+  modalBody.innerHTML = `<p><b>Subtotal:</b> $ ${subtotal.toFixed(2)}</p>
+            <p><b>IVA 10.5%:</b> $ ${iva105Total.toFixed(2)}</p>
+            <p><b>IVA 21%:</b> $ ${iva21Total.toFixed(2)}</p>
+            <p><b>TOTAL:</b> $ ${total.toFixed(2)}</p>`
+    console.log(subtotal)
+    console.log(iva105Total)
+    console.log(iva21Total)
+    console.log (total)
 })
 
 
