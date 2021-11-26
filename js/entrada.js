@@ -15,14 +15,14 @@ class Comprobante {
 
 }
 
-let arrayCabecera = JSON.parse(localStorage .getItem ('comprobante')) || [];
+let arrayCabecera = JSON.parse(localStorage .getItem ('cabecera')) || [];
 
 const btnCabecera = document.getElementById('boton-cabecera')
 btnCabecera.addEventListener ('click', (e) => {
   e.preventDefault()
 const comprobante = new Comprobante (inputRazonSocial.value,inputCuit.value,inputNroComprobante.value,inputFechaComprobante.value)
 arrayCabecera.push (comprobante)
-localStorage.setItem('comprobante', JSON.stringify(arrayCabecera))
+localStorage.setItem('cabecera', JSON.stringify(arrayCabecera))
 inputRazonSocial.disabled = true
 inputCuit.disabled = true
 inputNroComprobante.disabled = true
@@ -203,6 +203,7 @@ else if (resultadoBusqueda2.codigo == codigo.value) {
 renderizarTabla()
 })
 const btnCalcular = document.getElementById('boton-calcular')
+const btnGenerar = document.getElementById('boton-generar')
 let subtotal;
 let iva105Total;
 let iva21Total;
@@ -251,22 +252,51 @@ btnCalcular.addEventListener('click', (e)=>{
             <p><b>IVA 10.5%:</b> $ ${iva105Total.toFixed(2)}</p>
             <p><b>IVA 21%:</b> $ ${iva21Total.toFixed(2)}</p>
             <p><b>TOTAL:</b> $ ${total.toFixed(2)}</p>`
-    console.log(subtotal)
-    console.log(iva105Total)
-    console.log(iva21Total)
-    console.log (total)
+    
+})
+let comprobantesTotales = JSON.parse(localStorage .getItem ('totales')) || [];
+let comprobanteGenerado = JSON.parse(localStorage .getItem ('comprobantes')) || [];
+
+
+
+btnGenerar.addEventListener('click', (e)=>{
+  e.preventDefault();
+  calcularSubtotal();
+  calcularIvaTotal();
+  calcularTotal();
+comprobantesTotal = [
+  { subtotal: subtotal.toFixed(2),
+    iva105Total: iva105Total.toFixed(2),
+    iva21Total: iva21Total.toFixed(2),
+    itotal: total.toFixed(2)
+}]
+comprobantesTotales.push (comprobantesTotal);
+let comprobanteGenera = {
+  // cabecera: arrayCabecera,
+  RazonSocial: inputRazonSocial.value,
+  Cuit: inputCuit.value,
+  NroComprobante: inputNroComprobante.value,
+  FechaComprobante: inputFechaComprobante.value,
+  carga: cargaProductos,
+  // totales: comprobantesTotales
+  subtotal: subtotal.toFixed(2),
+    iva105Total: iva105Total.toFixed(2),
+    iva21Total: iva21Total.toFixed(2),
+    total: total.toFixed(2)
+}
+comprobanteGenerado.push (comprobanteGenera)
+localStorage.setItem('totales', JSON.stringify(comprobantesTotales))
+localStorage.setItem('comprobantes', JSON.stringify(comprobanteGenerado))
+localStorage.removeItem('cargaproductos');
+//AÑADIR MENSAJE DE CARGA DE FACTURA CORRECTA BAJO EL NRO SARASA
 })
 
-
-
 //**NOTAS**//
-//Empezar cabecera//
-//Boton elminar, guardar cabecera y añadirla a la carga, 
+//HACER QUE CARGAPRODUCTOS SEA 1 ARRAY POR CADA CARGA, Y NO CADA PRODUCTO CARGADO. 
+//TAL VEZ CONVENGA CREAR UN NUEVO ARRAY CON TODO JUNTO O VER DOCUMENTACION
+//PONER FUNCIONES DE CALCULOS TOTALES EN BOTON GENERAR FACTURA Y GENERAR NUEVO ARRAY
+// Y EN LOCALSTORAGE CON TODOS LOS TOTALES ADEMAS... SERÍAN 3 ARRAYS EN UNO CARAMBA.
 //Hacer que cuando la factura se guarde, se vacie el localstorage
 
-
-
-
-
-
-
+//LUEGO HACER FACTURAR PEDIDOS DESDE CERO <<ALTO BARDO>>
+//POR ULTIMO EL BONUS DE STOCK: JUGAR CON ESTADISTICAS SEGUN PUEDA.
