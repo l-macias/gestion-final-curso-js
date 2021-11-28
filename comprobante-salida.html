@@ -18,6 +18,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;300;400;700&display=swap" rel="stylesheet">
   <!-- Libreria Animate CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <!-- Alertify CSS -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+  <!-- Bootstrap Alertifyjs theme -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css" />
   <!-- Mi hoja de Estilos-->
   <link rel="stylesheet" href="./css/styles.css">
 </head>
@@ -47,7 +51,121 @@
     </nav>
   </header>
   <main>
+    <!-- CABECERA DE LA FACTURA-->
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Carga de comprobantes de Entrada</h3>
+            </div>
+            <div class="card-body">
+              <form id="formulario-cabecera" class="row">
+                <div class="form-group col-md-5">Razón Social<label for=""></label>
+                  <input id="razon-social" type="text" class="form-control" placeholder="Razón social del cliente"
+                    required>
+                </div>
+                <div class="form-group col-md-2"><label for="">CUIT</label>
+                  <input id="numero-cuit" type="number" class="form-control"
+                    placeholder="Nro de CUIT sin guión: Ej: 20123456780" required>
+                </div>
+                <div class="form-group col-md-3"><label for="">Nro Comprobante</label>
+                  <input id="numero-comprobante" type="number" class="form-control"
+                    placeholder="Nro de Comprobante: Ej: 123456" required>
+                </div>
+                <div class="form-group col-md-2"><label for="">Fecha</label>
+                  <input id="fecha-comprobante" type="date" class="form-control" required>
+                </div>
+                <div class="form-group col-md-2 ms-auto"><button id="boton-cabecera" type="submit"
+                    class="btn mt-3 d-flex ms-auto btn-primary">Guardar Datos</button></div>
 
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--CARGA DE PRODUCTOS AL COMPROBANTE DE SALIDA-->
+      <div class="row mt-3">
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <form id="formulario-productos" class="row">
+                <div id="contenedor-select-codigo" class="form-group col-md-2"><label for="">Código</label>
+                  <select id="select-codigo" name="" id="input-codigo" class="form-control">
+                    <option value="0">--Seleccionar</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-1"><label for="">Cantidad</label>
+                  <input id="input-cantidad" type="number" class="form-control">
+                </div>
+                <div class="form-group col-md-1"><label for="">Stock</label>
+                  <input id="input-stock" type="number" class="form-control" disabled>
+                </div>
+                <div class="form-group col-md-4"><label for="">Descripción</label>
+                  <input id="input-descripcion" type="text" class="form-control" disabled>
+                </div>
+                <div class="form-group col-md-1"><label for="">P.Unitario</label>
+                  <input id="input-precio-unitario" type="number" class="form-control" disabled>
+                </div>
+                <div class="form-group col-md-2"><label for="">P.Total</label>
+                  <input id="input-precio-total" type="number" class="form-control" disabled>
+                </div>
+                <div class="form-group col-md-1"><label for="">IVA</label>
+                  <input id="input-porcentaje-iva" type="number" class="form-control" disabled>
+                </div>
+
+                <div class="form-group col-md-1"><button id="boton-agregar" type="button"
+                    class="btn mt-4 btn-primary">Agregar</button></div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--Mostrar la Factura-->
+      <div class="row">
+        <div class="col">
+          <table id="tabla-salida" class="table text-center mt-3 table-dark table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Codigo</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">P.Unit</th>
+                <th scope="col">P.Total</th>
+                <th scope="col">%IVA</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="cuerpo-tabla-salida">
+
+
+          </table>
+
+          <button id="boton-calcular" class="btn btn-secondary d-flex ms-auto mt-1 mb-2" data-bs-toggle="modal"
+            data-bs-target="#modalTotales">Calcular Totales</button>
+          <button id="boton-generar" class="btn btn-success d-flex ms-auto mt-1 mb-2">Guardar Factura</button>
+
+        </div>
+      </div>
+    </div>
+
+    <!--MODAL DE TOTALES-->
+    <div class="modal fade" id="modalTotales" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 id="tituloModal">TOTALES</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+
+          <div id="modal-totales-body" class="modal-body">
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          </div>
   </main>
 
   <!-- Footer -->
@@ -111,7 +229,12 @@
           }, false)
         })
     })()</script>
-  <script src="./js/main.js"></script>
+  <!--JQUERY-->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <!-- Alertify JavaScript -->
+  <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+  <script src="./js/salida.js"></script>
 </body>
 
 </html>

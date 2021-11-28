@@ -128,13 +128,13 @@ const valorTotal = () => {
 const formularioProductos = document.getElementById('formulario-productos')
 const codigo = document.getElementById('select-codigo')
 const cantidad = document.getElementById('input-cantidad')
-const descripcion =document.getElementById('input-descripcion')
+const descripcion = document.getElementById('input-descripcion')
 const precioUnitario = document.getElementById('input-precio-unitario')
 const inputPrecioTotal = document.getElementById('input-precio-total')
-const btnAgregar =document.getElementById('boton-agregar')
+const btnAgregar = document.getElementById('boton-agregar')
 const porcentajedeIva = document.getElementById('input-porcentaje-iva')
 
-
+let markup;
 $(`#select-codigo`).change( (cod) => {
   codigoSelect = cod.target.value
     const productoPorModificar = buscarCodigoProductoCarga(codigoSelect)
@@ -144,6 +144,9 @@ $(`#select-codigo`).change( (cod) => {
   preTotal = precioUnitario.value * cantidad.value;
   $(`#input-precio-total`).val (preTotal);
   $(`#input-porcentaje-iva`).val (`${importProductos[indice].porcentajeDeIva}`)
+  markup = Number(importProductos[indice].markup);
+  precioConIva = Number(importProductos[indice].precioConIva);
+  precioVta = Number(importProductos[indice].precioVta);
   //ESCUCHAMOS SI CAMBIA EL VALOR DE CANTIDAD CON CLICK O CON EL TECLADO Y REALIZAMOS EL CALCULO
   $(`#input-cantidad`).on('keyup change', function (){
     preTotal = precioUnitario.value * cantidad.value;
@@ -175,7 +178,10 @@ const detalleCarga = {
   pUnitario: Number(precioUnitario.value),
   pTotal: Number(inputPrecioTotal.value),
   porcentIva: Number(porcentajedeIva.value),
-  ivaTotal: Number(ivaTotal)
+  ivaTotal: Number(ivaTotal),
+  markup: Number(markup),
+  precioConIva: Number(precioConIva),
+  precioVta: Number(precioVta)
 };
 console.log (detalleCarga)
 buscarCodigoProductoCarga2(codigo.value)
@@ -259,8 +265,8 @@ let comprobanteGenerado = JSON.parse(localStorage .getItem ('comprobantes')) || 
 
 
 
-btnGenerar.addEventListener('click', (e)=>{
-  e.preventDefault();
+btnGenerar.addEventListener('click', ()=>{
+  
   calcularSubtotal();
   calcularIvaTotal();
   calcularTotal();
@@ -279,24 +285,31 @@ let comprobanteGenera = {
   FechaComprobante: inputFechaComprobante.value,
   carga: cargaProductos,
   // totales: comprobantesTotales
-  subtotal: subtotal.toFixed(2),
-    iva105Total: iva105Total.toFixed(2),
-    iva21Total: iva21Total.toFixed(2),
-    total: total.toFixed(2)
+  subtotal: Number(subtotal.toFixed(2)),
+    iva105Total: Number( iva105Total.toFixed(2)),
+    iva21Total: Number(iva21Total.toFixed(2)),
+    total: Number(total.toFixed(2))
 }
 comprobanteGenerado.push (comprobanteGenera)
 localStorage.setItem('totales', JSON.stringify(comprobantesTotales))
 localStorage.setItem('comprobantes', JSON.stringify(comprobanteGenerado))
 localStorage.removeItem('cargaproductos');
-//AÑADIR MENSAJE DE CARGA DE FACTURA CORRECTA BAJO EL NRO SARASA
+document.location.reload();
+
 })
 
+
 //**NOTAS**//
+
 //HACER QUE CARGAPRODUCTOS SEA 1 ARRAY POR CADA CARGA, Y NO CADA PRODUCTO CARGADO. 
 //TAL VEZ CONVENGA CREAR UN NUEVO ARRAY CON TODO JUNTO O VER DOCUMENTACION
 //PONER FUNCIONES DE CALCULOS TOTALES EN BOTON GENERAR FACTURA Y GENERAR NUEVO ARRAY
 // Y EN LOCALSTORAGE CON TODOS LOS TOTALES ADEMAS... SERÍAN 3 ARRAYS EN UNO CARAMBA.
 //Hacer que cuando la factura se guarde, se vacie el localstorage
 
+//VALIDAR QUE INGRESEN POR INPUT LOS DATOS CORRESPONDIENTES 
+//FIJARSE QUE LA CANTIDAD NO SEA NEGATIVA NI CERO
+
 //LUEGO HACER FACTURAR PEDIDOS DESDE CERO <<ALTO BARDO>>
 //POR ULTIMO EL BONUS DE STOCK: JUGAR CON ESTADISTICAS SEGUN PUEDA.
+

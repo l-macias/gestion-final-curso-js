@@ -2,7 +2,7 @@
 const URL_CAT_JSON = "./json/categorias.json"
 //Declaracion de clase Productos
 class Producto {
-  constructor (codigo,desc,marca,categoria,costo,markup,iva,precioVta,precioConIva){
+  constructor (codigo,desc,marca,categoria,costo,markup,iva,precioVta,precioConIva,stock){
               this.codigo = codigo;
               this.desc = desc;
               this.marca = marca;
@@ -12,6 +12,7 @@ class Producto {
               this.porcentajeDeIva = iva;
               this.precioVta = precioVta;
               this.precioConIva = precioConIva;
+              this.stock = stock;
               }
   }
   //CONVIERTE A OBJETO LO ALMACENADO EN STRING O CREA ARREGLO VACIO 
@@ -183,10 +184,10 @@ return precioConIva = (precioVta*iva/100) + (precioVta);
   const desc = inputDesc.value;
   const marca = inputMarca.value;
   const categoria = categoriaSeleccionada;
-  const costo =+ inputCosto.value;
-  const markup =+ inputMarkup.value;
+  const costo = Number(inputCosto.value);
+  const markup = Number(inputMarkup.value);
   const iva =+ radioIva[0].value;
-  
+  const stock = 0;
   calcularPrecioVta()
   calcularPrecioConIva();
   
@@ -196,7 +197,7 @@ return precioConIva = (precioVta*iva/100) + (precioVta);
   // SINO QUE ELIMINE  EL ANTERIOR Y CREE UNO NUEVO
   // Y LE AÑADI ALERTIFY PARA CONFIRMAR QUE ESTAMOS MODIFICANDO.
       if (!resultadoBusqueda){
-        const producto = new Producto (codigo,desc,marca,categoria,costo,markup,iva,precioVta,precioConIva)
+        const producto = new Producto (codigo,desc,marca,categoria,costo,markup,iva,precioVta,precioConIva,stock)
         altaProducto(producto)
         ordenarArray(arrayProductos) ;
         localStorage.setItem('productos', JSON.stringify(arrayProductos))
@@ -207,7 +208,7 @@ return precioConIva = (precioVta*iva/100) + (precioVta);
           alertify.success(`Artículo con Código: ${codigo} modificado correctamente.`);
           eliminarProducto(resultadoBusqueda.codigo);
           vaciarTabla()
-          const producto = new Producto (codigo,desc,marca,categoria,costo,markup,iva,precioVta,precioConIva)
+          const producto = new Producto (codigo,desc,marca,categoria,costo,markup,iva,precioVta,precioConIva,stock)
           altaProducto(producto)
           ordenarArray(arrayProductos) ;
           localStorage.setItem('productos', JSON.stringify(arrayProductos))
@@ -286,3 +287,6 @@ return precioConIva = (precioVta*iva/100) + (precioVta);
       e.preventDefault();
       actualizarTabla()
   })
+
+  //PONER MENSAJE QUE AVISE CUANDO SE CARGA
+  //UN PRODUCTO 
