@@ -54,10 +54,7 @@ let arrayCabeceraSalida = JSON.parse(localStorage .getItem ('cabeceraSalida')) |
 const btnCabecera = document.getElementById('boton-cabecera')
 btnCabecera.addEventListener ('click', (e) => {
   e.preventDefault()
-  aparece(btnAgregar)
-const comprobanteSalida = new ComprobanteSalida (inputRazonSocialD.value,inputCuitD.value,inputNroComprobanteD.value,inputFechaComprobanteD.value)
-arrayCabeceraSalida.push (comprobanteSalida)
-localStorage.setItem('cabeceraSalida', JSON.stringify(arrayCabeceraSalida))
+ 
 inputRazonSocialD.disabled = true
 inputCuitD.disabled = true
 inputNroComprobanteD.disabled = true
@@ -194,6 +191,12 @@ let markup;
 $(`#select-codigo`).change( (cod) => {
   codigoSelect = cod.target.value
   console.log(codigoSelect)
+  if (codigo.value !=0){
+  aparece(btnAgregar)
+}
+else {
+  btnAgregar.setAttribute('style', 'display:none !important')
+}
   const productoPorModificar = buscarCodigoProductoDescarga(codigoSelect)
   const indice = importProductos.indexOf(productoPorModificar)
   $(`#input-descripcion`).val( `${importProductos[indice].desc}`)
@@ -338,7 +341,9 @@ let comprobanteGeneradoDescarga = JSON.parse(localStorage .getItem ('comprobante
 
 
 btnGenerar.addEventListener('click', ()=>{
-  
+  const comprobanteSalida = new ComprobanteSalida (inputRazonSocialD.value,inputCuitD.value,inputNroComprobanteD.value,inputFechaComprobanteD.value)
+  arrayCabeceraSalida.push (comprobanteSalida)
+  localStorage.setItem('cabeceraSalida', JSON.stringify(arrayCabeceraSalida))
   calcularSubtotal();
   calcularIvaTotal();
   calcularTotal();
@@ -390,6 +395,7 @@ for (let index in comprobanteGeneradoDescarga) {
   }
 //FALTARÍA QUE SE DESCUENTE EL STOCK AL FACTURAR
 
-//VALIDAR QUE SI O SI SE TENGAN QUE CARGAR LA CABECERA
+//VALIDAR QUE SI O SI SE TENGAN QUE CARGAR LA CABECERA EN ENTRADA 
+//REVISAR CADA SECCION DEL SISTEMILLA
 //SI CODIGO ES VALUE 0 O SEA SELECCIONAR, QUE NO PERMITA Y DIGA QUE HAY QUE SELECCIONAR (TAL VEZ IF VAL OF SEL = 0)
 //Y DARLE A LA ULTIMA SECCION Y A DEJAR TODO MAS LINDO
