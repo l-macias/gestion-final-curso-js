@@ -9,13 +9,13 @@ const arrayStock = {
 }
 let codigoEnStock = 'codigo';
 let agrupador ='cantidad';
+
 for (let index in importComprobantes) {
 const datazo = importComprobantes[index]
 datito = datazo.carga
+
 for (index in datito) {
 dato = datito[index]
-let i =0
-i++
 if (arrayStock.codigo.indexOf(dato[codigoEnStock]) ===-1) {
 arrayStock.codigo.push(dato[codigoEnStock]);
 arrayStock [dato[codigoEnStock]] = {};
@@ -27,6 +27,7 @@ arrayStock[dato[codigoEnStock]][agrupador] += dato[agrupador];
 }
 localStorage.setItem('productosEnStock', JSON.stringify(arrayStock))
 }
+
 
 
 
@@ -156,7 +157,7 @@ const dibujarProductoDescarga = (carga) => {
   botonEliminar.classList.add('btn','btn-danger');
   botonEliminar.innerText = 'Eliminar';
   botonEliminar.onclick = () => {
-    console.log (carga.codigo)
+    
     eliminarProductoDescarga (carga.codigo)
     actualizarTablaDescarga();
   
@@ -369,7 +370,24 @@ document.location.reload();
 
 })
 
-
+//RESTAMOS EL STOCK 
+for (let index in comprobanteGeneradoDescarga) {
+  const datazoD = comprobanteGeneradoDescarga[index]
+  datitoD = datazoD.carga
+  
+  for (index in datitoD) {
+  datoD = datitoD[index]
+  if (arrayStock.codigo.indexOf(datoD[codigoEnStock]) ===-1) {
+  arrayStock.codigo.push(datoD[codigoEnStock]);
+  arrayStock [datoD[codigoEnStock]] = {};
+  
+  arrayStock[datoD[codigoEnStock]][agrupador] = 0;
+  }
+  
+  arrayStock[datoD[codigoEnStock]][agrupador] -= datoD[agrupador];
+  }
+  localStorage.setItem('productosEnStock', JSON.stringify(arrayStock))
+  }
 //FALTARÍA QUE SE DESCUENTE EL STOCK AL FACTURAR
 
 //VALIDAR QUE SI O SI SE TENGAN QUE CARGAR LA CABECERA
