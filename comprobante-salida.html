@@ -92,12 +92,12 @@
             <div class="card-body">
               <form id="formulario-productos" class="row">
                 <div id="contenedor-select-codigo" class="form-group col-md-2"><label for="">Código</label>
-                  <select id="select-codigo" name="" id="input-codigo" class="form-control">
+                  <select id="select-codigo" name="" id="input-codigo" class="form-control" disabled>
                     <option value="0">--Seleccionar</option>
                   </select>
                 </div>
                 <div class="form-group col-md-1"><label for="">Cantidad</label>
-                  <input id="input-cantidad" type="number" class="form-control">
+                  <input id="input-cantidad" type="number" class="form-control" disabled>
                 </div>
                 <div class="form-group col-md-1"><label for="">Stock</label>
                   <input id="input-stock" type="number" class="form-control" disabled>
@@ -116,7 +116,7 @@
                 </div>
 
                 <div class="form-group col-md-1"><button id="boton-agregar" type="button"
-                    class="btn mt-4 btn-primary">Agregar</button></div>
+                    class="btn mt-4 btn-primary desaparece">Agregar</button></div>
               </form>
             </div>
           </div>
@@ -143,9 +143,10 @@
 
           </table>
 
-          <button id="boton-calcular" class="btn btn-secondary d-flex ms-auto mt-1 mb-2" data-bs-toggle="modal"
-            data-bs-target="#modalTotales">Calcular Totales</button>
-          <button id="boton-generar" class="btn btn-success d-flex ms-auto mt-1 mb-2">Guardar Factura</button>
+          <button id="boton-calcular" class="btn btn-secondary d-flex ms-auto mt-1 mb-2 desaparece"
+            data-bs-toggle="modal" data-bs-target="#modalTotales">Calcular Totales</button>
+          <button id="boton-generar" class="btn btn-success d-flex ms-auto mt-1 mb-2 desaparece">Guardar
+            Factura</button>
 
         </div>
       </div>

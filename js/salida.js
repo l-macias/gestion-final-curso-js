@@ -1,19 +1,14 @@
-//IMPORTAMOS LOS COMPROBANTES ALMACENADOS EN LOCALSTORAGE 
+//IMPORTAMOS DATOS ALMACENADOS EN LOCALSTORAGE Y GUARDAMOS EN VARIABLES.
 let importComprobantes = JSON.parse(localStorage .getItem('comprobantes')) || [] 
 let importProductos = JSON.parse(localStorage .getItem('productos')) || [] 
 let importStock = JSON.parse(localStorage .getItem('productosEnStock')) || [] 
 
-
-
 //RECUPERAR EL MALDITO STOCK
-
-  
-// }
 const arrayStock = {
   codigo:[]
 }
-let codigoEnStock = "codigo";
-let agrupador ="cantidad";
+let codigoEnStock = 'codigo';
+let agrupador ='cantidad';
 for (let index in importComprobantes) {
 const datazo = importComprobantes[index]
 datito = datazo.carga
@@ -58,6 +53,7 @@ let arrayCabeceraSalida = JSON.parse(localStorage .getItem ('cabeceraSalida')) |
 const btnCabecera = document.getElementById('boton-cabecera')
 btnCabecera.addEventListener ('click', (e) => {
   e.preventDefault()
+  aparece(btnAgregar)
 const comprobanteSalida = new ComprobanteSalida (inputRazonSocialD.value,inputCuitD.value,inputNroComprobanteD.value,inputFechaComprobanteD.value)
 arrayCabeceraSalida.push (comprobanteSalida)
 localStorage.setItem('cabeceraSalida', JSON.stringify(arrayCabeceraSalida))
@@ -65,7 +61,15 @@ inputRazonSocialD.disabled = true
 inputCuitD.disabled = true
 inputNroComprobanteD.disabled = true
 inputFechaComprobanteD.disabled = true
+cantidad.disabled = false;
+codigo.disabled = false;
+//Desaparecemos el boton para que no se presione reiteradas veces 
+btnCabecera.setAttribute('style', 'display:none !important')
 })
+//Funcion para que aparezcan botones luego de hacer acciones
+const aparece = (elementoDOM) =>{
+  elementoDOM.setAttribute('style','display:block !important')
+}
 
 
 //AGREGAR PRODUCTOS PARA VENDER
@@ -193,8 +197,12 @@ $(`#select-codigo`).change( (cod) => {
   const indice = importProductos.indexOf(productoPorModificar)
   $(`#input-descripcion`).val( `${importProductos[indice].desc}`)
   $(`#input-stock`).val( `${arrayStock[codigoSelect].cantidad}`)
+  //Ponemos atributos de minimo 1 y máximo el stock disponible y si escribe a mano
+  //algo mayor al stock, que se cambie automáticamente al stock disponible.
   cantidad.setAttribute("min", 1);
   cantidad.setAttribute("max", arrayStock[codigoSelect].cantidad );
+  if (cantidad.value >=arrayStock[codigoSelect].cantidad){
+    cantidad.value = arrayStock[codigoSelect].cantidad}
   $(`#input-precio-unitario`).val(`${importProductos[indice].precioVta}`)
   preTotal = precioUnitarioVta.value * cantidad.value;
   $(`#input-precio-total`).val (preTotal);
@@ -206,6 +214,8 @@ $(`#select-codigo`).change( (cod) => {
   $(`#input-cantidad`).on('keyup change', function (){
     cantidad.setAttribute("min", 1);
   cantidad.setAttribute("max", arrayStock[codigoSelect].cantidad );
+  if (cantidad.value >=arrayStock[codigoSelect].cantidad){
+  cantidad.value = arrayStock[codigoSelect].cantidad}
     preTotal = precioUnitarioVta.value * cantidad.value;
     $(`#input-precio-total`).val (preTotal);
     
@@ -227,6 +237,8 @@ const renderizarTabla= () => {
 //ESCUCHAMOS EL BOTON DE AGREGAR Y PUSHEAMOS LA CARGA AL ARRAY
 btnAgregar.addEventListener('click', (e)=>{
   e.preventDefault()
+  aparece (btnCalcular);
+  aparece (btnGenerar);
   ivaTotal = porcentajedeIva.value /100 * preTotal;
 const detalleDescarga = {
   codigo: codigo.value,
@@ -240,7 +252,7 @@ const detalleDescarga = {
   precioConIva: Number(precioConIva),
   precioVta: Number(precioVta)
 };
-console.log (detalleDescarga)
+
 buscarCodigoProductoDescarga2 (codigo.value)
 console.log (`EL codigo de codigo en buscarreusltado es: ${codigo.value}`)
 if (!resultadoBusqueda2){
@@ -357,6 +369,9 @@ document.location.reload();
 
 })
 
-//FALTA CORREGIR QUE NO PUEDAN SUPERAR LA CANTIDAD DE STOCK DISPONIBLE
+
 //FALTARÍA QUE SE DESCUENTE EL STOCK AL FACTURAR
+
+//VALIDAR QUE SI O SI SE TENGAN QUE CARGAR LA CABECERA
+//SI CODIGO ES VALUE 0 O SEA SELECCIONAR, QUE NO PERMITA Y DIGA QUE HAY QUE SELECCIONAR (TAL VEZ IF VAL OF SEL = 0)
 //Y DARLE A LA ULTIMA SECCION Y A DEJAR TODO MAS LINDO

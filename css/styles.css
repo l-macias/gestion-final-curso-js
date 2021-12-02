@@ -1,4 +1,8 @@
 @charset "UTF-8";
+.desaparece {
+  display: none !important;
+}
+
 .main__titulo {
   color: white;
   text-align: center;
