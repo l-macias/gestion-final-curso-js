@@ -278,7 +278,8 @@ comprobantesTotal = [
 }]
 comprobantesTotales.push (comprobantesTotal);
 let comprobanteGenera = {
-  // cabecera: arrayCabecera,
+  
+  tipo: "entrada",
   RazonSocial: inputRazonSocial.value,
   Cuit: inputCuit.value,
   NroComprobante: inputNroComprobante.value,

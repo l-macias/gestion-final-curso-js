@@ -54,7 +54,6 @@ let arrayCabeceraSalida = JSON.parse(localStorage .getItem ('cabeceraSalida')) |
 const btnCabecera = document.getElementById('boton-cabecera')
 btnCabecera.addEventListener ('click', (e) => {
   e.preventDefault()
- 
 inputRazonSocialD.disabled = true
 inputCuitD.disabled = true
 inputNroComprobanteD.disabled = true
@@ -355,7 +354,7 @@ comprobantesTotal = [
 }]
 comprobantesTotalesDescarga.push (comprobantesTotal);
 let comprobanteGenera = {
-  // cabecera: arrayCabecera,
+  tipo: "salida",
   RazonSocial: inputRazonSocialD.value,
   Cuit: inputCuitD.value,
   NroComprobante: inputNroComprobanteD.value,
@@ -393,9 +392,7 @@ for (let index in comprobanteGeneradoDescarga) {
   }
   localStorage.setItem('productosEnStock', JSON.stringify(arrayStock))
   }
-//FALTARÍA QUE SE DESCUENTE EL STOCK AL FACTURAR
 
-//VALIDAR QUE SI O SI SE TENGAN QUE CARGAR LA CABECERA EN ENTRADA 
+ 
 //REVISAR CADA SECCION DEL SISTEMILLA
-//SI CODIGO ES VALUE 0 O SEA SELECCIONAR, QUE NO PERMITA Y DIGA QUE HAY QUE SELECCIONAR (TAL VEZ IF VAL OF SEL = 0)
-//Y DARLE A LA ULTIMA SECCION Y A DEJAR TODO MAS LINDO
+// DARLE A LA ULTIMA SECCION Y A DEJAR TODO MAS LINDO
