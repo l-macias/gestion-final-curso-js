@@ -44,7 +44,7 @@
             <a class="nav-link active" href="./abm-productos.html">ABM Productos</a>
             <a class="nav-link" href="./comprobante-entrada.html">Fact. Proveedor</a>
             <a class="nav-link" href="./comprobante-salida.html">Facturar Productos</a>
-            <a class="nav-link" href="./stock.html">Ver Stock</a>
+            <a class="nav-link" href="./movimientos.html">Movimientos</a>
           </div>
         </div>
       </div>
@@ -102,6 +102,7 @@
           <div class="col-12 text-center">
             <button id="boton-limpiar" class="btn btn-primary formulario__btn" type="reset">Limpiar</button>
             <button id="boton-agregar" class="btn btn-primary formulario__btn" type="button">Agregar</button>
+            <p id="msj-cargado" class="mt-3 cargado">El producto ha sido añadido correctamente.</p>
           </div>
       </form>
     </section>
@@ -111,9 +112,11 @@
         TODOS</button>
       <div class="col-3"></div>
       <div class="col-2"></div>
+      <label id="boton-buscar"
+        class="d-flex justify-content-center align-items-center border border-white col-md-1">BUSCAR</label>
       <input id="input-buscar" class="col-md-4 center" id="input-buscar" type="text"
         placeholder="Ingrese el codigo a buscar">
-      <button id="boton-buscar" class="btn formulario__btn col-md-1">BUSCAR</button>
+
     </div>
     <div class="contenedor-productos container-fluid">
       <table id="tabla-productos" class="table mt-3 table-dark">
@@ -185,7 +188,7 @@
             </form>
           </div>
           <div class="modal-footer">
-            <p id="mensaje-detalle" class="item-guardado">El item ha sido editado correctamente! <br> Ahora puede
+            <p id="mensaje-editar" class="item-guardado">El item ha sido editado correctamente! <br> Ahora puede
               cerrar
               o realizar otra
               modificación</p>
@@ -212,8 +215,8 @@
           </a>
         </div>
         <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
-          <h5 class="text-uppercase mb-2">Stock</h5>
-          <a href="./stock.html" class="footer__a me-2 mb-4">Consultar Stock
+          <h5 class="text-uppercase mb-2">Movimientos</h5>
+          <a href="./movimientos.html" class="footer__a me-2 mb-4">Ver Movimientos
           </a>
         </div>
         <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
@@ -272,7 +275,7 @@
     })</script>
   <!-- Alertify JavaScript -->
   <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
-  <script src="./js/main.js"></script>
+  <script src="./js/abm.js"></script>
 </body>
 
 </html>

@@ -14,7 +14,10 @@ class Comprobante {
   }
 
 }
-
+//Funcion para que aparezcan botones luego de hacer acciones
+const aparece = (elementoDOM) =>{
+  elementoDOM.setAttribute('style','display:block !important')
+}
 let arrayCabecera = JSON.parse(localStorage .getItem ('cabecera')) || [];
 
 const btnCabecera = document.getElementById('boton-cabecera')
@@ -27,9 +30,13 @@ inputRazonSocial.disabled = true
 inputCuit.disabled = true
 inputNroComprobante.disabled = true
 inputFechaComprobante.disabled = true
+cantidad.disabled = false;
+codigo.disabled = false;
+//Desaparecemos el boton para que no se presione reiteradas veces 
+btnCabecera.setAttribute('style', 'display:none !important')
 })
 
-//AGREGAR PRODUCTOS//
+
 
 //IMPORTAMOS LOS PRODUCTOS ALMACENADOS EN LOCALSTORAGE 
 let importProductos = JSON.parse(localStorage .getItem('productos')) || [] 
@@ -135,8 +142,16 @@ const btnAgregar = document.getElementById('boton-agregar')
 const porcentajedeIva = document.getElementById('input-porcentaje-iva')
 
 let markup;
+//Observamos si cambia el codigo en select y no seleccionan categoria
+//le ocultamos el boton de agregar
 $(`#select-codigo`).change( (cod) => {
   codigoSelect = cod.target.value
+  if (codigo.value !=0) {
+    aparece(btnAgregar)
+  }
+  else{
+    btnAgregar.setAttribute('style', 'display:none !important')
+  }
     const productoPorModificar = buscarCodigoProductoCarga(codigoSelect)
   const indice = importProductos.indexOf(productoPorModificar)
   $(`#input-descripcion`).val( `${importProductos[indice].desc}`)
@@ -147,8 +162,10 @@ $(`#select-codigo`).change( (cod) => {
   markup = Number(importProductos[indice].markup);
   precioConIva = Number(importProductos[indice].precioConIva);
   precioVta = Number(importProductos[indice].precioVta);
+  cantidad.setAttribute("min", 1);
   //ESCUCHAMOS SI CAMBIA EL VALOR DE CANTIDAD CON CLICK O CON EL TECLADO Y REALIZAMOS EL CALCULO
   $(`#input-cantidad`).on('keyup change', function (){
+    cantidad.setAttribute("min", 1);
     preTotal = precioUnitario.value * cantidad.value;
     $(`#input-precio-total`).val (preTotal);
     
@@ -162,37 +179,34 @@ const renderizarTabla= () => {
   cargaProductos.forEach ((cargaproductos) => {
     
     dibujarProductoEntrada(cargaproductos)
-    
-    
-})
+  })
 }
 
 //ESCUCHAMOS EL BOTON DE AGREGAR Y PUSHEAMOS LA CARGA AL ARRAY
 btnAgregar.addEventListener('click', (e)=>{
   e.preventDefault()
+  aparece (btnCalcular);
+  aparece (btnGenerar);
   ivaTotal = porcentajedeIva.value /100 * preTotal;
-const detalleCarga = {
-  codigo: codigo.value,
-  cantidad: Number(cantidad.value),
-  descripcion: descripcion.value,
-  pUnitario: Number(precioUnitario.value),
-  pTotal: Number(inputPrecioTotal.value),
-  porcentIva: Number(porcentajedeIva.value),
-  ivaTotal: Number(ivaTotal),
-  markup: Number(markup),
-  precioConIva: Number(precioConIva),
-  precioVta: Number(precioVta)
-};
-console.log (detalleCarga)
+  const detalleCarga = {
+    codigo: codigo.value,
+    cantidad: Number(cantidad.value),
+    descripcion: descripcion.value,
+    pUnitario: Number(precioUnitario.value),
+    pTotal: Number(inputPrecioTotal.value),
+    porcentIva: Number(porcentajedeIva.value),
+    ivaTotal: Number(ivaTotal),
+    markup: Number(markup),
+    precioConIva: Number(precioConIva),
+    precioVta: Number(precioVta)
+  };
+
 buscarCodigoProductoCarga2(codigo.value)
-console.log (`EL codigo de codigo en buscarreusltado es: ${codigo.value}`)
 if (!resultadoBusqueda2){
-  
-cargaProductos.push (detalleCarga)
-localStorage.setItem('cargaproductos', JSON.stringify(cargaProductos))
+  cargaProductos.push (detalleCarga)
+  localStorage.setItem('cargaproductos', JSON.stringify(cargaProductos))
 }
 else if (resultadoBusqueda2.codigo == codigo.value) {
-  console.log (`EL resultadobusqueda2 en buscarreusltado es: ${resultadoBusqueda2}`)
   alertify.confirm(`El código: ${codigo.value} ya existe. ¿Desea Reemplazarlo con los nuevos datos ingresados?`,
         function(){
           alertify.success(`Artículo con Código: ${codigo.value} modificado correctamente.`);
@@ -205,7 +219,7 @@ else if (resultadoBusqueda2.codigo == codigo.value) {
         function(){
           alertify.error('Modificación Cancelada');
         });
-      }
+}
 renderizarTabla()
 })
 const btnCalcular = document.getElementById('boton-calcular')
@@ -214,8 +228,8 @@ let subtotal;
 let iva105Total;
 let iva21Total;
 let total;
-//FUNCION QUE CALCULA CADA IVA DISCRIMINADO
 
+//FUNCION QUE CALCULA CADA IVA DISCRIMINADO
 const calcularIvaTotal = () =>{
   iva105Total=0;
   iva21Total=0;
@@ -230,27 +244,23 @@ const calcularIvaTotal = () =>{
   }
   })
   }
-
-
 //FUNCION QUE CALCULA SUBTOTAL
 const calcularSubtotal = () =>{
   subtotal=0;
   cargaProductos.forEach ((prod) => {
-    
     subtotal += prod["pTotal"];
     
   })
-  }
+}
 //FUNCION QUE SUMA LOS TOTALES
 const calcularTotal = () => {
   total=0;
   total = subtotal+iva105Total+iva21Total;
 }
-
+//modal que calcula los totales y los muestra.
 let modalBody = document.getElementById('modal-totales-body')
 btnCalcular.addEventListener('click', (e)=>{
   e.preventDefault();
-
   calcularSubtotal();
   calcularIvaTotal();
   calcularTotal();
@@ -264,9 +274,8 @@ let comprobantesTotales = JSON.parse(localStorage .getItem ('totales')) || [];
 let comprobanteGenerado = JSON.parse(localStorage .getItem ('comprobantes')) || [];
 
 
-
+//Generamos el bendito comprobante con todo, y  calculando los totales de nuevo.
 btnGenerar.addEventListener('click', ()=>{
-  
   calcularSubtotal();
   calcularIvaTotal();
   calcularTotal();
@@ -275,7 +284,7 @@ comprobantesTotal = [
     iva105Total: iva105Total.toFixed(2),
     iva21Total: iva21Total.toFixed(2),
     itotal: total.toFixed(2)
-}]
+  }]
 comprobantesTotales.push (comprobantesTotal);
 let comprobanteGenera = {
   
@@ -284,12 +293,11 @@ let comprobanteGenera = {
   Cuit: inputCuit.value,
   NroComprobante: inputNroComprobante.value,
   FechaComprobante: inputFechaComprobante.value,
-  carga: cargaProductos,
-  // totales: comprobantesTotales
+    carga: cargaProductos,
   subtotal: Number(subtotal.toFixed(2)),
-    iva105Total: Number( iva105Total.toFixed(2)),
-    iva21Total: Number(iva21Total.toFixed(2)),
-    total: Number(total.toFixed(2))
+  iva105Total: Number( iva105Total.toFixed(2)),
+  iva21Total: Number(iva21Total.toFixed(2)),
+  total: Number(total.toFixed(2))
 }
 comprobanteGenerado.push (comprobanteGenera)
 localStorage.setItem('totales', JSON.stringify(comprobantesTotales))

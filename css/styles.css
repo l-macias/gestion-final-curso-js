@@ -125,4 +125,9 @@ label {
   color: #8caf0d;
   display: block;
 }
+
+.cargado {
+  color: #8caf0d;
+  display: none;
+}
 /*# sourceMappingURL=styles.css.map */

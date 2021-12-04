@@ -1,8 +1,8 @@
- //Declaración de URL para exportar las categorías desde el JSON
+ //Declaración de URL para importar las categorías desde el JSON
 const URL_CAT_JSON = "./json/categorias.json"
-//Declaracion de clase Productos
+//Declaracion de clase Producto
 class Producto {
-  constructor (codigo,desc,marca,categoria,costo,markup,iva,precioVta,precioConIva,stock){
+  constructor (codigo,desc,marca,categoria,costo,markup,iva,precioVta,precioConIva){
               this.codigo = codigo;
               this.desc = desc;
               this.marca = marca;
@@ -12,10 +12,9 @@ class Producto {
               this.porcentajeDeIva = iva;
               this.precioVta = precioVta;
               this.precioConIva = precioConIva;
-              this.stock = stock;
               }
   }
-  //CONVIERTE A OBJETO LO ALMACENADO EN STRING O CREA ARREGLO VACIO 
+  //RECUPERA CONTENIDO DE LOCALSTORAGE O  CREA ARREGLO VACIO 
   let arrayProductos = JSON.parse(localStorage .getItem('productos')) || [] 
   
   // FUNCION PARA BUSCAR EN ARRAY
@@ -53,7 +52,7 @@ class Producto {
     //SECCION CATEGORIA (LLAMAR CATEGORIAS)
     let inputCategoria = document.getElementById('editar-categoria')
     
-    $.getJSON (URL_CAT_JSON, (categ, estado) => {
+  $.getJSON (URL_CAT_JSON, (categ, estado) => {
       if ( estado !== 'success') {
         throw new Error('No se realizó el get correctamente')
       }
@@ -66,7 +65,7 @@ class Producto {
                     ${ categoria.nombreCategoria }
                 </option>
         `)
-    } 
+      } 
   })
     inputCategoria.innerHTML = "";
     inputCategoria.value = arrayProductos[indice].categoria
@@ -75,24 +74,18 @@ class Producto {
     let inputMarkup = document.getElementById('editar-margen')
     inputMarkup.value =+ arrayProductos[indice].markup;
     let editarIva;
-
-    //****PARA VALIDAR PODRÍA HACER UN IF SI IVA ES 21% CHECK OPT 1 
-    //****SI ES 10.5 CHECK OPTION */
     
-       //CUANDO HACEMOS CLICK EN EL GUARDAR DEL MODAL REALIZA LOS CAMBIOS. ELIMINA EL ANTERIOR CODIGO
+    //CUANDO HACEMOS CLICK EN EL GUARDAR DEL MODAL REALIZA LOS CAMBIOS. ELIMINA EL ANTERIOR CODIGO
     //Y LO REEMPLAZA POR EL NUEVO EDITADO.
     let mensajeEditar = document.getElementById('mensaje-editar')
-
     btnConfirmar.addEventListener("click",(e)=>{
       e.preventDefault()
-    
-    // onclick = () => {
       if (document.getElementById('editar-iva21').checked) {
         editarIva = 21
-        }
-        else if (document.getElementById('editar-iva105').checked) {
+      }
+      else if (document.getElementById('editar-iva105').checked) {
           editarIva = 10.5
-        }
+      }
       buscarCodigoProducto(inputCodigo.value)
       eliminarProducto(resultadoBusqueda.codigo);
       
@@ -132,7 +125,7 @@ class Producto {
       return 0;
     })
   })
-    //JSON CATEGORIAS
+    // TRAEMOS DESDE EL .JSON LAS CATEGORIAS
   $.getJSON (URL_CAT_JSON, (categ, estado) => {
     if ( estado !== 'success') {
       throw new Error('No se realizó el get correctamente')
@@ -187,8 +180,7 @@ return precioConIva = (precioVta*iva/100) + (precioVta);
   const costo = Number(inputCosto.value);
   const markup = Number(inputMarkup.value);
   const iva =+ radioIva[0].value;
-  const stock = 0;
-  calcularPrecioVta()
+    calcularPrecioVta()
   calcularPrecioConIva();
   
   //VALIDAMOS QUE NO EXISTA EL CÓDIGO Y SINO LO PISAMOS
@@ -197,7 +189,7 @@ return precioConIva = (precioVta*iva/100) + (precioVta);
   // SINO QUE ELIMINE  EL ANTERIOR Y CREE UNO NUEVO
   // Y LE AÑADI ALERTIFY PARA CONFIRMAR QUE ESTAMOS MODIFICANDO.
       if (!resultadoBusqueda){
-        const producto = new Producto (codigo,desc,marca,categoria,costo,markup,iva,precioVta,precioConIva,stock)
+        const producto = new Producto (codigo,desc,marca,categoria,costo,markup,iva,precioVta,precioConIva)
         altaProducto(producto)
         ordenarArray(arrayProductos) ;
         localStorage.setItem('productos', JSON.stringify(arrayProductos))
@@ -208,7 +200,7 @@ return precioConIva = (precioVta*iva/100) + (precioVta);
           alertify.success(`Artículo con Código: ${codigo} modificado correctamente.`);
           eliminarProducto(resultadoBusqueda.codigo);
           vaciarTabla()
-          const producto = new Producto (codigo,desc,marca,categoria,costo,markup,iva,precioVta,precioConIva,stock)
+          const producto = new Producto (codigo,desc,marca,categoria,costo,markup,iva,precioVta,precioConIva)
           altaProducto(producto)
           ordenarArray(arrayProductos) ;
           localStorage.setItem('productos', JSON.stringify(arrayProductos))
@@ -217,6 +209,9 @@ return precioConIva = (precioVta*iva/100) + (precioVta);
         alertify.error('Modificación Cancelada');
       });
     }
+    //PEQUEÑA NOTIFICACION DE QUE EL PRODUCTO SE CARGÓ.
+    $(`#msj-cargado`).show(200);
+    $(`#msj-cargado`).hide(7000);
   })
   
   let cuerpoTabla = document.getElementById('cuerpo-tabla')
@@ -287,6 +282,3 @@ return precioConIva = (precioVta*iva/100) + (precioVta);
       e.preventDefault();
       actualizarTabla()
   })
-
-  //PONER MENSAJE QUE AVISE CUANDO SE CARGA
-  //UN PRODUCTO 

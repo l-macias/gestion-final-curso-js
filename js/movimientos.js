@@ -1,3 +1,4 @@
+//Traemos toda la data que encontremos almacenada en localstorage.
 let comprobantesEntrada = JSON.parse(localStorage .getItem('comprobantes')) || [] 
 let comprobantesSalida = JSON.parse(localStorage .getItem('comprobantesDescarga')) || [] 
 let comprobantesGeneral = comprobantesEntrada.concat(comprobantesSalida)
@@ -11,7 +12,7 @@ const  buscarComprobante = (numero) => {
   return resultadoBusqueda = numeroBuscado;
 }
 
-
+//ARMAMOS LA TABLITA Y LE PONEMOS COLORES A LOS COMPROBANTES DE ENTRADA O SALIDA.
 const actualizarTablaResumen = () => {
   vaciarTablaResumen();
   comprobantesGeneral.forEach ((carga) => {
@@ -31,8 +32,6 @@ cargar.setAttribute('style', 'color:green !important')
   })
 }
 //DIBUJAMOS LA TABLA DE LO CARGADO
-
-
 const dibujarProductoResumen = (carga) => {
     
   let filaResumen = document.createElement('tr');
@@ -53,7 +52,7 @@ const dibujarProductoResumen = (carga) => {
   tdDetalleProductos.appendChild(botonDetalle)
   filaResumen.appendChild (tdDetalleProductos);
   cuerpoTablaResumen.appendChild (filaResumen);
-  
+  //CUANDO APRIETEN EN EL DETALLE DEL COMPROBANTE VAN A VER CABECERA, CARGA Y TOTALES DEL MISMO DETALLADO.
   botonDetalle.onclick = () =>{
     
     //CAPTURAMOS MODAL DEL DOM PARA LA CABECERA
@@ -78,29 +77,24 @@ const dibujarProductoResumen = (carga) => {
             <p><b>IVA 10.5%:</b> $ ${carga.iva105Total.toFixed(2)}</p>
             <p><b>IVA 21%:</b> $ ${carga.iva21Total.toFixed(2)}</p>
             <p><b>TOTAL:</b> $ ${carga.total.toFixed(2)}</p>`
-
   }
+}
   
-  }
-  
-  const vaciarTablaResumen = () =>{
+    const vaciarTablaResumen = () =>{
     cuerpoTablaResumen.innerHTML ="";
     
   }
-  actualizarTablaResumen()
+actualizarTablaResumen()
 //FUNCION PARA RELLENAR EL MODAL
 const rellenarModal = (numero) =>{
   const comprobanteBuscado = buscarComprobante(numero)
   const indice = comprobantesGeneral.indexOf(comprobanteBuscado)
-  
 }
 let cuerpoTablaResumenCarga = document.getElementById('cuerpo-carga-resumen')
+//FUNCION PARA MOSTRAR LOS DETALLES
 const mostrarCarga = () =>{
+    aLaCarga.forEach((indice) =>{
   
-  
-  
-  aLaCarga.forEach((indice) =>{
-      
     let filaCargaResumen = document.createElement('tr');
     filaCargaResumen.setAttribute("class", "carga")
     filaCargaResumen.innerHTML = `  
@@ -111,12 +105,11 @@ const mostrarCarga = () =>{
                           <td>$ ${indice.pTotal} </td>
                           <td> ${indice.porcentIva}</td>`
     
-
     cuerpoTablaResumenCarga.appendChild (filaCargaResumen);
 
   })
 }
-
+//funcion que vacia la carga para q no se duplique.
 const vaciarCargar = ()=>{
   cuerpoTablaResumenCarga.innerHTML =""
 }

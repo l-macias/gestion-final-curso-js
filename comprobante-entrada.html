@@ -44,7 +44,7 @@
             <a class="nav-link" href="./abm-productos.html">ABM Productos</a>
             <a class="nav-link active" href="./comprobante-entrada.html">Fact. Proveedor</a>
             <a class="nav-link" href="./comprobante-salida.html">Facturar Productos</a>
-            <a class="nav-link" href="./stock.html">Ver Stock</a>
+            <a class="nav-link" href="./movimientos.html">Movimientos</a>
           </div>
         </div>
       </div>
@@ -91,12 +91,12 @@
             <div class="card-body">
               <form id="formulario-productos" class="row">
                 <div id="contenedor-select-codigo" class="form-group col-md-2"><label for="">Código</label>
-                  <select id="select-codigo" name="" id="input-codigo" class="form-control">
+                  <select id="select-codigo" name="" id="input-codigo" class="form-control" disabled>
                     <option value="0">--Seleccionar</option>
                   </select>
                 </div>
                 <div class="form-group col-md-1"><label for="">Cantidad</label>
-                  <input id="input-cantidad" type="number" class="form-control">
+                  <input id="input-cantidad" type="number" class="form-control" disabled>
                 </div>
                 <div class="form-group col-md-5"><label for="">Descripción</label>
                   <input id="input-descripcion" type="text" class="form-control" disabled>
@@ -112,7 +112,7 @@
                 </div>
 
                 <div class="form-group col-md-1"><button id="boton-agregar" type="button"
-                    class="btn mt-4 btn-primary">Agregar</button></div>
+                    class="btn mt-4 btn-primary desaparece">Agregar</button></div>
               </form>
             </div>
           </div>
@@ -139,9 +139,10 @@
 
           </table>
 
-          <button id="boton-calcular" class="btn btn-secondary d-flex ms-auto mt-1 mb-2" data-bs-toggle="modal"
-            data-bs-target="#modalTotales">Calcular Totales</button>
-          <button id="boton-generar" class="btn btn-success d-flex ms-auto mt-1 mb-2">Guardar Factura</button>
+          <button id="boton-calcular" class="desaparece btn btn-secondary d-flex ms-auto mt-1 mb-2"
+            data-bs-toggle="modal" data-bs-target="#modalTotales">Calcular Totales</button>
+          <button id="boton-generar" class="desaparece btn btn-success d-flex ms-auto mt-1 mb-2">Guardar
+            Factura</button>
 
         </div>
       </div>
@@ -179,8 +180,8 @@
           </a>
         </div>
         <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
-          <h5 class="text-uppercase mb-2">Stock</h5>
-          <a href="./stock.html" class="footer__a me-2 mb-4">Consultar Stock
+          <h5 class="text-uppercase mb-2">Movimientos</h5>
+          <a href="./movimientos.html" class="footer__a me-2 mb-4">Ver Movimientos
           </a>
         </div>
         <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">

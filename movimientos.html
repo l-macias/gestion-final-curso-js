@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sistema de Gestión de Productos - STOCK</title>
+  <title>Sistema de Gestión de Productos - MOVIMIENTOS</title>
   <!-- CDN BOOTSTRAP -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
@@ -40,7 +40,7 @@
             <a class="nav-link" href="./abm-productos.html">ABM Productos</a>
             <a class="nav-link" href="./comprobante-entrada.html">Fact. Proveedor</a>
             <a class="nav-link" href="./comprobante-salida.html">Facturar Productos</a>
-            <a class="nav-link active" href="./stock.html">Ver Stock</a>
+            <a class="nav-link active" href="./movimientos.html">Movimientos</a>
           </div>
         </div>
       </div>
@@ -74,7 +74,7 @@
         <div class="modal-dialog modal-xl">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 id="tituloModal">Editar Producto</h5>
+              <h5 id="tituloModal">Detalle de Comprobante</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
             <div class="modal-body">
@@ -152,8 +152,8 @@
           </a>
         </div>
         <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
-          <h5 class="text-uppercase mb-2">Stock</h5>
-          <a href="./stock.html" class="footer__a me-2 mb-4">Consultar Stock
+          <h5 class="text-uppercase mb-2">Movimientos</h5>
+          <a href="./movimientos.html" class="footer__a me-2 mb-4"> Ver Movimientos
           </a>
         </div>
         <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
@@ -197,7 +197,7 @@
           }, false)
         })
     })()</script>
-  <script src="./js/stock.js"></script>
+  <script src="./js/movimientos.js"></script>
 </body>
 
 </html>

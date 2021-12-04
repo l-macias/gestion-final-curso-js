@@ -50,7 +50,7 @@ class ComprobanteSalida {
 }
 
 let arrayCabeceraSalida = JSON.parse(localStorage .getItem ('cabeceraSalida')) || [];
-
+//Cuando hacemos click en Guardar Cabecera nos anula editarla,  y permite cargar productos
 const btnCabecera = document.getElementById('boton-cabecera')
 btnCabecera.addEventListener ('click', (e) => {
   e.preventDefault()
@@ -110,19 +110,16 @@ const eliminarProductoDescarga = (codigo) => {
   localStorage.setItem('descargaProductos', JSON.stringify(descargaProductos))
   actualizarTablaDescarga()
 }
-
+//CHEQUEAR Y SOLO LISTAR LOS PRODUCTOS CON STOCK EN EL SELECT
 for (const cargarCodigo of importProductos){
-
-  //ver si tiene stock, sino no poner****************
   buscarProductoConStock(cargarCodigo.codigo)
-  
-   if (resultadoStockPositivo == cargarCodigo.codigo && arrayStock[resultadoStockPositivo].cantidad >=1 ){
-  $('#select-codigo').append (`
+  if (resultadoStockPositivo == cargarCodigo.codigo && arrayStock[resultadoStockPositivo].cantidad >=1 ){
+    $('#select-codigo').append (`
                     <option id="producto-${cargarCodigo.codigo}"
                     value="${cargarCodigo.codigo}"
                     >
                     ${cargarCodigo.codigo}</option>`)
-   }
+  }
 }
 let cuerpoTablaCarga = document.getElementById('cuerpo-tabla-salida')
 
@@ -166,10 +163,11 @@ const dibujarProductoDescarga = (carga) => {
   
   
   }
-  vaciarTablaDescarga = () =>{
+  //funcion para vaciar la tabla
+const vaciarTablaDescarga = () =>{
     cuerpoTablaCarga.innerHTML ="";
   }
-  
+  //funcion que calcula el valor total.
 const valorTotal = () => {
   let inputCantidad = $(`#input-cantidad`) 
   pTotal = importProductos[indice].costo * inputCantidad
@@ -187,9 +185,10 @@ const btnAgregar = document.getElementById('boton-agregar')
 const porcentajedeIva = document.getElementById('input-porcentaje-iva')
 
 let markup;
+//Escuchamos si cambia el select y no permitimos que pongan --SELECCIONAR, 
+//ocultando el boton de agregar, ja.
 $(`#select-codigo`).change( (cod) => {
   codigoSelect = cod.target.value
-  console.log(codigoSelect)
   if (codigo.value !=0){
   aparece(btnAgregar)
 }
@@ -216,7 +215,8 @@ else {
   //ESCUCHAMOS SI CAMBIA EL VALOR DE CANTIDAD CON CLICK O CON EL TECLADO Y REALIZAMOS EL CALCULO
   $(`#input-cantidad`).on('keyup change', function (){
     cantidad.setAttribute("min", 1);
-  cantidad.setAttribute("max", arrayStock[codigoSelect].cantidad );
+  //Seteamos que la cantidad máxima no supere el Stock disponible del producto
+    cantidad.setAttribute("max", arrayStock[codigoSelect].cantidad );
   if (cantidad.value >=arrayStock[codigoSelect].cantidad){
   cantidad.value = arrayStock[codigoSelect].cantidad}
     preTotal = precioUnitarioVta.value * cantidad.value;
@@ -257,14 +257,11 @@ const detalleDescarga = {
 };
 
 buscarCodigoProductoDescarga2 (codigo.value)
-console.log (`EL codigo de codigo en buscarreusltado es: ${codigo.value}`)
 if (!resultadoBusqueda2){
-  
-descargaProductos.push (detalleDescarga)
-localStorage.setItem('descargaProductos', JSON.stringify(descargaProductos))
+  descargaProductos.push (detalleDescarga)
+  localStorage.setItem('descargaProductos', JSON.stringify(descargaProductos))
 }
 else if (resultadoBusqueda2.codigo == codigo.value) {
-  console.log (`EL resultadobusqueda2 en buscarreusltado es: ${resultadoBusqueda2}`)
   alertify.confirm(`El código: ${codigo.value} ya existe. ¿Desea Reemplazarlo con los nuevos datos ingresados?`,
         function(){
           alertify.success(`Artículo con Código: ${codigo.value} modificado correctamente.`);
@@ -287,31 +284,25 @@ let subtotal;
 let iva105Total;
 let iva21Total;
 let total;
-//FUNCION QUE CALCULA CADA IVA DISCRIMINADO
 
+//FUNCION QUE CALCULA CADA IVA DISCRIMINADO
 const calcularIvaTotal = () =>{
   iva105Total=0;
   iva21Total=0;
   descargaProductos.forEach ((prod) => {
     if (prod['porcentIva'] == 21) {
       iva21Total += prod['ivaTotal'];
-        
-  
     }
     else {
       iva105Total += prod['ivaTotal'];
   }
   })
   }
-
-
 //FUNCION QUE CALCULA SUBTOTAL
 const calcularSubtotal = () =>{
   subtotal=0;
   descargaProductos.forEach ((prod) => {
-    
-    subtotal += prod["pTotal"];
-    
+  subtotal += prod["pTotal"];
   })
   }
 //FUNCION QUE SUMA LOS TOTALES
@@ -323,7 +314,6 @@ const calcularTotal = () => {
 let modalBody = document.getElementById('modal-totales-body')
 btnCalcular.addEventListener('click', (e)=>{
   e.preventDefault();
-
   calcularSubtotal();
   calcularIvaTotal();
   calcularTotal();
@@ -337,8 +327,9 @@ btnCalcular.addEventListener('click', (e)=>{
 let comprobantesTotalesDescarga = JSON.parse(localStorage .getItem ('totalesDescarga')) || [];
 let comprobanteGeneradoDescarga = JSON.parse(localStorage .getItem ('comprobantesDescarga')) || [];
 
-
-
+//ESCUCHAMOS EL CLICK DE BOTON GENERAR Y GUARDAMOS TODO
+//EN UN ARREGLO EXTRAÑO QUE NOS COMPLICARA LUEGO
+//LLENO DE TODO TIPO DE INFORMACION E INDICES, MUCHOS.
 btnGenerar.addEventListener('click', ()=>{
   const comprobanteSalida = new ComprobanteSalida (inputRazonSocialD.value,inputCuitD.value,inputNroComprobanteD.value,inputFechaComprobanteD.value)
   arrayCabeceraSalida.push (comprobanteSalida)
@@ -374,7 +365,7 @@ document.location.reload();
 
 })
 
-//RESTAMOS EL STOCK 
+//RESTAMOS EL STOCK DE LO FACTURADO
 for (let index in comprobanteGeneradoDescarga) {
   const datazoD = comprobanteGeneradoDescarga[index]
   datitoD = datazoD.carga
@@ -392,7 +383,3 @@ for (let index in comprobanteGeneradoDescarga) {
   }
   localStorage.setItem('productosEnStock', JSON.stringify(arrayStock))
   }
-
- 
-//REVISAR CADA SECCION DEL SISTEMILLA
-// DARLE A LA ULTIMA SECCION Y A DEJAR TODO MAS LINDO
